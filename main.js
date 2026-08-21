@@ -84,6 +84,8 @@ window.boot = function() {
                     setTimeout(function() {
                         loadingBool = false;
                         loadintT.remove();
+                        var loadintGif = document.getElementById("loadingImg");
+                        if (loadintGif) { loadintGif.remove(); }
                     }, 0.1 * 1000);
                     clearInterval(timer);
                 }

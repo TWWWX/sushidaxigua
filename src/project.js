@@ -2130,7 +2130,31 @@ window.__require = function e(t, n, o) {
           }
           a.launchScene = e, a.Bros = t, a.caS = n, this.curType = 1, this.getHttpGameId(), this.gamePV_load(), console.log("thisg", this.gameHttpId), o.httpInitUrl(this.gameHttpId);
           var c = this.initLanguage();
-          this.gameNameText = c.game_name, this.gameInfoText = c.game_info, this.txtStartText = c.txtStart, this.txtMoreText = c.txtMore, this.txtAgainText = c.txtAgain, this.gameEndLText = c.gameEndL, this.gameEndL1Text = c.gameEndL1, this.bgLayRgb = c.bgRgb, this.gameEndName1 = c.gameT2, this.gameEndName2 = c.gameT3, this.gameEndUrl1 = c.gameUrl1, this.gameEndUrl2 = c.gameUrl2, this.langugeType = this.curType, i.goToCover(this.adShowBefore, this.adShowAfter, e, t, n)
+          this.gameNameText = c.game_name, this.gameInfoText = c.game_info, this.txtStartText = c.txtStart, this.txtMoreText = c.txtMore, this.txtAgainText = c.txtAgain, this.gameEndLText = c.gameEndL, this.gameEndL1Text = c.gameEndL1, this.bgLayRgb = c.bgRgb, this.gameEndName1 = c.gameT2, this.gameEndName2 = c.gameT3, this.gameEndUrl1 = c.gameUrl1, this.gameEndUrl2 = c.gameUrl2, this.langugeType = this.curType;
+          var s = '"Noto Serif SC", "Songti SC", "SimSun", "STSong", serif';
+          cc._suSongFont = s;
+          var l = cc.Label.prototype._onEnableBase;
+          cc.Label.prototype._applySuSongFont = function () {
+            if (this._isSystemFontUsed || !this.font || this.font instanceof cc.BitmapFont === false && this.useSystemFont !== false) {
+              this.fontFamily = cc._suSongFont
+            }
+          };
+          cc.director.on(cc.Director.EVENT_AFTER_SCENE_LAUNCH, function () {
+            var e = cc.director.getScene();
+            if (e) {
+              e.walk(function (e) {
+                var t = e.getComponent(cc.Label);
+                t && t._applySuSongFont && t._applySuSongFont()
+              })
+            }
+          });
+          var u = cc.Node.prototype.addComponent;
+          cc.Node.prototype.addComponent = function (e) {
+            var t = u.apply(this, arguments);
+            if (t && t instanceof cc.Label) setTimeout(function () { t._applySuSongFont && t._applySuSongFont() }, 0);
+            return t
+          };
+          i.goToCover(this.adShowBefore, this.adShowAfter, e, t, n)
         },
         getHttpGameId: function () {
           var e = window.location.href,

@@ -6647,7 +6647,7 @@
       "_fontSize": 35,
       "_N$horizontalAlign": 1,
       "_N$verticalAlign": 1,
-      "_N$fontFamily": "微软雅黑",
+      "_N$fontFamily": "Noto Serif SC",
       "_N$overflow": 3
     },
     {
@@ -6961,7 +6961,7 @@
           "_N$string": "点击继续",
           "_N$horizontalAlign": 1,
           "_N$verticalAlign": 1,
-          "_N$fontFamily": "微软雅黑"
+          "_N$fontFamily": "Noto Serif SC"
         }
       ],
       "_opacity": 0,

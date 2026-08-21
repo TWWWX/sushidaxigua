@@ -42253,7 +42253,7 @@
         r || (r = {}), (function(t) {
             var e = (function() {
                 function e(i) {
-                    this._clock = new t.WorldClock, this._events = [], this._objects = [], this._eventManager = null, this._eventManager = i, console.info("DragonBones: " + e.VERSION + "\nWebsite: http://dragonbones.com/\nSource and Demo: https://github.com/DragonBones/")
+                    this._clock = new t.WorldClock, this._events = [], this._objects = [], this._eventManager = null, this._eventManager = i, console.info("DragonBones: " + e.VERSION + "\nWebsite: https://dragonbones.com/\nSource and Demo: https://github.com/DragonBones/")
                 }
                 return e.prototype.advanceTime = function(e) {
                     if (this._objects.length > 0) {

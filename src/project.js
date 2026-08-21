@@ -1047,7 +1047,7 @@ window.__require = function e(t, n, o) {
           this.canClick && 0 == cc.find("Canvas/uiEffectPanel").childrenCount && a.default.Instance.RestartGame()
         }, t.prototype.OnClickMoreGame = function () {
           this.canClick && (this.moreGameBtn.off(cc.Node.EventType.TOUCH_START, this.OnClickMoreGame, this), this.canClick = !1, this.moreGameBtn.runAction(cc.sequence(cc.scaleTo(.1, 1.1), cc.scaleTo(.1, 1))), this.scheduleOnce(function () {
-            window.location.href = "http://m.wesane.com/"
+            window.location.href = "https://m.wesane.com/"
           }, .15))
         }, t.prototype.GetContentByScore = function (e) {
           var t = Math.ceil(e / 1500 * 94);
@@ -1468,7 +1468,7 @@ window.__require = function e(t, n, o) {
     cc._RF.push(t, "197e1hfNnxIcJx73V3VhUxY", "HttpManagerJs");
     var a = e("GameConfig"),
       i = (c(o = {
-        URL: "http://www.wesane.com/h5service.php/Interface/services",
+        URL: "https://www.wesane.com/h5service.php/Interface/services",
         cacheList: null,
         isBusy: null,
         req: null,
@@ -1787,8 +1787,8 @@ window.__require = function e(t, n, o) {
         gameT1: "\u5173\u6ce8\u6211\u4eec",
         gameT2: "\u7eb8\u724c\u63a5\u9f99",
         gameT3: "\u9526\u4e0a\u6dfb\u82b1",
-        gameUrl1: "http://g.regogame.com/game/9/",
-        gameUrl2: "http://g.regogame.com/game/3/",
+        gameUrl1: "https://g.regogame.com/game/9/",
+        gameUrl2: "https://g.regogame.com/game/3/",
         gameT11: "\u5173\u6ce8\u5fae\u4fe1",
         gameT12: "\u5173\u6ce8Kakao",
         gameT13: "\u5173\u6ce8Line",
@@ -1808,8 +1808,8 @@ window.__require = function e(t, n, o) {
         gameT1: "Follow Us",
         gameT2: "Thousand Flower",
         gameT3: "Eliminate Star",
-        gameUrl1: "http://g.fromgame.com/game/53",
-        gameUrl2: "http://g.fromgame.com/game/13",
+        gameUrl1: "https://g.fromgame.com/game/53",
+        gameUrl2: "https://g.fromgame.com/game/13",
         gameT11: "Focus WeChat",
         gameT12: "Focus Kakao",
         gameT13: "Focus Line",
@@ -2143,13 +2143,13 @@ window.__require = function e(t, n, o) {
             i = c.substring(c.lastIndexOf("/game/") + 1, c.length).split("/");
           i.length >= 2 && (a = i[1]), this.gameHttpId = a, cc.log("gameId", a);
           e.substring(e.lastIndexOf("//") + 4, e.lastIndexOf("com") + 3);
-          this.moreGameUrl = "http://m.wesane.com/"
+          this.moreGameUrl = "https://m.wesane.com/"
         },
         gameOverShowText: function (e, t) {
-          this.ajaxLoad("http://www.wesane.com/admin.php/Gamescore/saveGamescore", "gameScore=" + e + "&gameId=" + this.gameHttpId + "&gameType=" + t, this.scoreResult)
+          this.ajaxLoad("https://www.wesane.com/admin.php/Gamescore/saveGamescore", "gameScore=" + e + "&gameId=" + this.gameHttpId + "&gameType=" + t, this.scoreResult)
         },
         gamePV_load: function () {
-          this.ajaxLoad("http://www.wesane.com/admin.php/Activityshow/gamelogo", "gameID=" + this.gameHttpId, this.ajaxOnLogoResult)
+          this.ajaxLoad("https://www.wesane.com/admin.php/Activityshow/gamelogo", "gameID=" + this.gameHttpId, this.ajaxOnLogoResult)
         },
         ajaxOnLogoResult: function () {
         },

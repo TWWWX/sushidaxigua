@@ -2165,7 +2165,7 @@ window.__require = function e(t, n, o) {
             i = c.substring(c.lastIndexOf("/game/") + 1, c.length).split("/");
           i.length >= 2 && (a = i[1]), this.gameHttpId = a, cc.log("gameId", a);
           e.substring(e.lastIndexOf("//") + 4, e.lastIndexOf("com") + 3);
-          this.moreGameUrl = "https://m.wesane.com/"
+          this.moreGameUrl = "https://sushishicijingxuan.pages.dev/"
         },
         gameOverShowText: function () {},
         gamePV_load: function () {},

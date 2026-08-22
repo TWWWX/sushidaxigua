@@ -1108,6 +1108,7 @@ window.__require = function e(t, n, o) {
       }(cc.Component);
     n.default = p, cc._RF.pop()
   }, {
+    "../Common/SpriteManager": "SpriteManager",
     "../Common/Utils": "Utils",
     "../common/PlayerInfo": "PlayerInfo",
     "./GameManager": "GameManager",

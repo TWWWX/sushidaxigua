@@ -1233,49 +1233,8 @@ window.__require = function e(t, n, o) {
           }).start(), n.Instance.fruitHeigth = n.Instance.findHighestFruit()
         }, t.prototype.createFruitSui = function (e, t) {
         }, t.prototype.createFruitL = function (e, t, n) {
-          u.default.Instance.Play(3, !1, .5), u.default.Instance.Play(6, !1, .3);
-          for (var o = 0; o < 10; o++) {
-            var c = r.default.Spawn("juicePre", this.downEffect);
-            c.getComponent(cc.Sprite).spriteFrame = d.default.Instance.fruitL[e];
-            var a = 359 * Math.random(),
-              i = 30 * Math.random() + n / 2,
-              l = cc.v2(Math.sin(a * Math.PI / 180) * i, Math.cos(a * Math.PI / 180) * i);
-            c.scale = .5 * Math.random() + n / 100;
-            var p = .5 * Math.random();
-            c.position = t, c.runAction(cc.sequence(cc.spawn(cc.moveBy(p, l), cc.scaleTo(p + .5, .3), cc.rotateBy(p + .5, s.default.RandomInteger(-360, 360))), cc.fadeOut(.1), cc.callFunc(function () {
-              h.active = !1
-            }, this)))
-          }
-          for (var f = 0; f < 20; f++) {
-            var h = r.default.Spawn("juicePre", this.downEffect);
-            h.getComponent(cc.Sprite).spriteFrame = d.default.Instance.guozhiL[e], h.active = !0;
-            a = 359 * Math.random(), i = 30 * Math.random() + n / 2, l = cc.v2(Math.sin(a * Math.PI / 180) * i, Math.cos(a * Math.PI / 180) * i);
-            h.scale = .5 * Math.random() + n / 100;
-            p = .5 * Math.random();
-            h.position = t, h.runAction(cc.sequence(cc.spawn(cc.moveBy(p, l), cc.scaleTo(p + .5, .3)), cc.fadeOut(.1), cc.callFunc(function () {
-              h.active = !1
-            }, this)))
-          }
-          var m = r.default.Spawn("juicePre", this.downEffect);
-          m.getComponent(cc.Sprite).spriteFrame = d.default.Instance.guozhiZ[e], m.position = t, m.scale = 0, m.angle = s.default.RandomInteger(0, 360), m.runAction(cc.sequence(cc.spawn(cc.scaleTo(.2, n / 150), cc.fadeOut(1)), cc.callFunc(function () {
-            m.active = !1
-          })))
+          u.default.Instance.Play(3, !1, .5), u.default.Instance.Play(6, !1, .3)
         }, t.prototype.levelUpEffect = function () {
-          for (var e = 0; e < 25; e++) {
-            var t = r.default.Spawn("lightEffect", this.downEffect);
-            t.scale = .3 * Math.random() + .2, t.opacity = 210;
-            var n = 360 * Math.random() * Math.PI / 180,
-              o = 20 * Math.random(),
-              c = 35 + 60 * Math.random(),
-              a = cc.v2(Math.sin(n) * (o + c), Math.cos(n) * (o + c));
-            cc.tween(t).to(.8, {
-              position: a,
-              angle: s.default.getRandomNum(180, 360, !0),
-              opacity: s.default.getRandomNum(.4, .8)
-            }, {
-              easing: "cubicOut"
-            }).then(cc.removeSelf(!0))
-          }
         }, t.prototype.conboHit = function (e) {
           var t = this;
           u.default.Instance.Play(5, !1, .5);
@@ -1300,22 +1259,6 @@ window.__require = function e(t, n, o) {
             o.runAction(cc.sequence(cc.spawn(cc.moveTo(.255, i).easing(cc.easeCubicActionOut()), cc.scaleTo(.255, 1 * Math.random() + .5), cc.moveBy(4.25, cc.v2(0, .8 * -cc.winSize.height - Math.random() * cc.winSize.height)), cc.rotateBy(4.25, (1800 * Math.random() + 1200) * (Math.random() > .5 ? 1 : -1)), cc.sequence(cc.moveBy(.17 * (8 * Math.random() + 6), cc.v2((100 * Math.random() + 100) * (Math.random() > .5 ? -1 : 1), 0)), cc.moveBy(.17 * (8 * Math.random() + 6), cc.v2((100 * Math.random() + 100) * (Math.random() > .5 ? -1 : 1), 0)), cc.moveBy(.17 * (8 * Math.random() + 6), cc.v2((100 * Math.random() + 100) * (Math.random() > .5 ? -1 : 1), 0))), cc.sequence(cc.delayTime(.17 * s.default.getRandomNum(20, 24.5)), cc.fadeOut(.17))), cc.removeSelf(!0)))
           }
         }, t.prototype.ShowLandParti = function (e, t) {
-          for (var n = t, o = [cc.v2(e.position.x - 8, e.position.y), cc.v2(e.position.x + 8, e.position.y)], c = 0; c < o.length; c++) {
-            if (o[c].x < e.position.x) var a = -1;
-            else a = 1;
-            for (var i = function () {
-              var t = r.default.Spawn("juicePre", e);
-              t.setSiblingIndex(4), t.getComponent(cc.Sprite).spriteFrame = d.default.Instance.fllows[s.default.getRandomNum(0, 5, !0)], t.stopAllActions(), t.opacity = 255, t.scale = .3;
-              var n = o[c];
-              t.setPosition(n);
-              var i = cc.v2(s.default.getRandomNum(0, 400, !0) * a, -s.default.getRandomNum(300, 500, !0)),
-                u = s.default.getRandomNum(1440, 3600, !0) * a,
-                p = s.default.getRandomNum(450, 600, !0);
-              t.runAction(cc.sequence(cc.spawn(cc.sequence(cc.jumpBy(s.default.RandomInteger(1500, 1700) / p, i, p, 1), cc.spawn(cc.moveBy(50 / p, cc.v2(0, -30)), cc.fadeOut(50 / p))), cc.scaleTo(s.default.RandomInteger(1500, 1700) / p, s.default.getRandomNum(.4, .7, !1)), cc.rotateTo(s.default.RandomInteger(1500, 1700) / p, u / 2)), cc.callFunc(function () {
-                r.default.Despawn("juicePre", t)
-              }, l)))
-            }, l = this, u = 0; u < n; u++) i()
-          }
         }, t.Instance = null, c([h(cc.Node)], t.prototype, "bgLayer", void 0), c([h(cc.Node)], t.prototype, "bgCamera", void 0), c([h(cc.Node)], t.prototype, "mainCamera", void 0), c([h(cc.Node)], t.prototype, "fruitNode", void 0), c([h(cc.Node)], t.prototype, "lineNode", void 0), c([h(cc.Node)], t.prototype, "bazieffect", void 0), c([h(cc.Node)], t.prototype, "downEffect", void 0), c([h(cc.Prefab)], t.prototype, "fruitPre", void 0), t = n = c([f], t)
       }(cc.Component);
     n.default = m, cc._RF.pop()

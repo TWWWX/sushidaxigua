@@ -1065,10 +1065,21 @@ window.__require = function e(t, n, o) {
           }).union().repeatForever().start();
           var o = this;
           this.scheduleOnce(function () {
-            if (o.adsButton2 && o.adsButton2.children[0]) {
-              var c = f.default.Instance.GetSpriteFrame("home");
-              c && (o.adsButton2.children[0].getComponent(cc.Sprite).spriteFrame = c)
-            }
+            try {
+              if (!o.adsButton2 || !o.adsButton2.children[0]) return;
+              var u = null;
+              if (f.default && f.default.Instance) u = f.default.Instance;
+              else {
+                var c = cc.director.getScene();
+                if (c) {
+                  var a = c.getComponentInChildren(f.default);
+                  a && (u = a)
+                }
+              }
+              if (!u) return;
+              var s = u.GetSpriteFrame("home");
+              s && (o.adsButton2.children[0].getComponent(cc.Sprite).spriteFrame = s)
+            } catch (e) {}
           }, .1)
         }, t.prototype.update = function (e) {
         }, t.prototype.adsButtonFunc2 = function () {
@@ -2171,18 +2182,10 @@ window.__require = function e(t, n, o) {
           e.substring(e.lastIndexOf("//") + 4, e.lastIndexOf("com") + 3);
           this.moreGameUrl = "https://m.wesane.com/"
         },
-        gameOverShowText: function (e, t) {
-          this.ajaxLoad("https://www.wesane.com/admin.php/Gamescore/saveGamescore", "gameScore=" + e + "&gameId=" + this.gameHttpId + "&gameType=" + t, this.scoreResult)
-        },
-        gamePV_load: function () {
-          this.ajaxLoad("https://www.wesane.com/admin.php/Activityshow/gamelogo", "gameID=" + this.gameHttpId, this.ajaxOnLogoResult)
-        },
-        ajaxOnLogoResult: function () {
-        },
-        ajaxLoad: function (e, t, n) {
-          var o = cc.loader.getXMLHttpRequest();
-          o.onreadystatechange = n, o.open("POST", e), o.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"), o.send(t)
-        },
+        gameOverShowText: function () {},
+        gamePV_load: function () {},
+        ajaxOnLogoResult: function () {},
+        ajaxLoad: function () {},
         scoreResult: function (e) {
           if (null != e.currentTarget.response && "" != e.currentTarget.response) {
             var t = JSON.parse(e.currentTarget.response);

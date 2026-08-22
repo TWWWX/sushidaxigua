@@ -1058,35 +1058,17 @@ window.__require = function e(t, n, o) {
             scale: 1.1
           }).to(.5, {
             scale: 1
-          }).union().repeatForever().start(), cc.tween(this.adsButton2).to(1, {
-            scale: .8
-          }).to(1, {
-            scale: .9
           }).union().repeatForever().start();
-          var o = this;
-          this.scheduleOnce(function () {
-            try {
-              if (!o.adsButton2 || !o.adsButton2.children[0]) return;
-              var u = null;
-              if (f.default && f.default.Instance) u = f.default.Instance;
-              else {
-                var c = cc.director.getScene();
-                if (c) {
-                  var a = c.getComponentInChildren(f.default);
-                  a && (u = a)
-                }
-              }
-              if (!u) return;
-              var s = u.GetSpriteFrame("home");
-              s && (o.adsButton2.children[0].getComponent(cc.Sprite).spriteFrame = s)
-            } catch (e) {}
-          }, .1)
+          try {
+            if (this.adsButton2) {
+              this.adsButton2.stopAllActions();
+              var btn = this.adsButton2.getComponent(cc.Button);
+              btn && (btn.enabled = !1, btn.clickEvents = []);
+              this.adsButton2.off(cc.Node.EventType.TOUCH_START), this.adsButton2.off(cc.Node.EventType.TOUCH_END)
+            }
+          } catch (e) {}
         }, t.prototype.update = function (e) {
         }, t.prototype.adsButtonFunc2 = function () {
-          var home = document.getElementById('homePage');
-          var game = document.getElementById('gamePage');
-          if (home && game) { home.style.display = 'block'; game.style.display = 'none'; }
-          cc.game.pause()
         }, t.prototype.bannerButtonFunc = function () {
           if (adLink) {
             window.location.href = adLink
@@ -1107,9 +1089,12 @@ window.__require = function e(t, n, o) {
         }, t.prototype.OnClickCloseMask = function () {
           this.canClick && 0 == cc.find("Canvas/uiEffectPanel").childrenCount && a.default.Instance.RestartGame()
         }, t.prototype.OnClickMoreGame = function () {
-          this.canClick && (this.moreGameBtn.off(cc.Node.EventType.TOUCH_START, this.OnClickMoreGame, this), this.canClick = !1, this.moreGameBtn.runAction(cc.sequence(cc.scaleTo(.1, 1.1), cc.scaleTo(.1, 1))), this.scheduleOnce(function () {
-            window.location.href = "https://m.wesane.com/"
-          }, .15))
+          if (!this.canClick) return;
+          this.moreGameBtn.off(cc.Node.EventType.TOUCH_START, this.OnClickMoreGame, this), this.canClick = !1, this.moreGameBtn.runAction(cc.sequence(cc.scaleTo(.1, 1.1), cc.scaleTo(.1, 1)));
+          var home = document.getElementById('homePage');
+          var game = document.getElementById('gamePage');
+          if (home && game) { home.style.display = 'block'; game.style.display = 'none'; }
+          cc.game.pause()
         }, t.prototype.GetContentByScore = function (e) {
           var t = Math.ceil(e / 1500 * 94);
           t > 94 && (t = 94);

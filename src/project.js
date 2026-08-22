@@ -1039,7 +1039,6 @@ window.__require = function e(t, n, o) {
       i = e("../Common/Utils"),
       r = e("./MainGameUi"),
       s = e("../common/PlayerInfo"),
-      f = e("../Common/SpriteManager"),
       l = cc._decorator,
       u = l.ccclass,
       d = l.property,
@@ -1058,17 +1057,16 @@ window.__require = function e(t, n, o) {
             scale: 1.1
           }).to(.5, {
             scale: 1
-          }).union().repeatForever().start();
-          try {
-            if (this.adsButton2) {
-              this.adsButton2.stopAllActions();
-              var btn = this.adsButton2.getComponent(cc.Button);
-              btn && (btn.enabled = !1, btn.clickEvents = []);
-              this.adsButton2.off(cc.Node.EventType.TOUCH_START), this.adsButton2.off(cc.Node.EventType.TOUCH_END)
-            }
-          } catch (e) {}
+          }).union().repeatForever().start(), cc.tween(this.adsButton2).to(1, {
+            scale: .8
+          }).to(1, {
+            scale: .9
+          }).union().repeatForever().start()
         }, t.prototype.update = function (e) {
         }, t.prototype.adsButtonFunc2 = function () {
+          if (adLink) {
+            window.location.href = adLink
+          }
         }, t.prototype.bannerButtonFunc = function () {
           if (adLink) {
             window.location.href = adLink
@@ -1089,12 +1087,9 @@ window.__require = function e(t, n, o) {
         }, t.prototype.OnClickCloseMask = function () {
           this.canClick && 0 == cc.find("Canvas/uiEffectPanel").childrenCount && a.default.Instance.RestartGame()
         }, t.prototype.OnClickMoreGame = function () {
-          if (!this.canClick) return;
-          this.moreGameBtn.off(cc.Node.EventType.TOUCH_START, this.OnClickMoreGame, this), this.canClick = !1, this.moreGameBtn.runAction(cc.sequence(cc.scaleTo(.1, 1.1), cc.scaleTo(.1, 1)));
-          var home = document.getElementById('homePage');
-          var game = document.getElementById('gamePage');
-          if (home && game) { home.style.display = 'block'; game.style.display = 'none'; }
-          cc.game.pause()
+          this.canClick && (this.moreGameBtn.off(cc.Node.EventType.TOUCH_START, this.OnClickMoreGame, this), this.canClick = !1, this.moreGameBtn.runAction(cc.sequence(cc.scaleTo(.1, 1.1), cc.scaleTo(.1, 1))), this.scheduleOnce(function () {
+            window.location.href = "https://sushishicijingxuan.pages.dev/"
+          }, .15))
         }, t.prototype.GetContentByScore = function (e) {
           var t = Math.ceil(e / 1500 * 94);
           t > 94 && (t = 94);
@@ -1104,7 +1099,6 @@ window.__require = function e(t, n, o) {
       }(cc.Component);
     n.default = p, cc._RF.pop()
   }, {
-    "../Common/SpriteManager": "SpriteManager",
     "../Common/Utils": "Utils",
     "../common/PlayerInfo": "PlayerInfo",
     "./GameManager": "GameManager",
@@ -2167,10 +2161,18 @@ window.__require = function e(t, n, o) {
           e.substring(e.lastIndexOf("//") + 4, e.lastIndexOf("com") + 3);
           this.moreGameUrl = "https://sushishicijingxuan.pages.dev/"
         },
-        gameOverShowText: function () {},
-        gamePV_load: function () {},
-        ajaxOnLogoResult: function () {},
-        ajaxLoad: function () {},
+        gameOverShowText: function (e, t) {
+          this.ajaxLoad("https://www.wesane.com/admin.php/Gamescore/saveGamescore", "gameScore=" + e + "&gameId=" + this.gameHttpId + "&gameType=" + t, this.scoreResult)
+        },
+        gamePV_load: function () {
+          this.ajaxLoad("https://www.wesane.com/admin.php/Activityshow/gamelogo", "gameID=" + this.gameHttpId, this.ajaxOnLogoResult)
+        },
+        ajaxOnLogoResult: function () {
+        },
+        ajaxLoad: function (e, t, n) {
+          var o = cc.loader.getXMLHttpRequest();
+          o.onreadystatechange = n, o.open("POST", e), o.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"), o.send(t)
+        },
         scoreResult: function (e) {
           if (null != e.currentTarget.response && "" != e.currentTarget.response) {
             var t = JSON.parse(e.currentTarget.response);

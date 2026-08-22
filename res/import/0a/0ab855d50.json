@@ -6399,9 +6399,9 @@
       ],
       "_color": {
         "__type__": "cc.Color",
-        "r": 255,
-        "g": 236,
-        "b": 77
+        "r": 245,
+        "g": 243,
+        "b": 239
       },
       "_contentSize": {
         "__type__": "cc.Size",
@@ -6545,8 +6545,9 @@
       ],
       "_color": {
         "__type__": "cc.Color",
-        "r": 255,
-        "g": 8
+        "r": 245,
+        "g": 248,
+        "b": 244
       },
       "_contentSize": {
         "__type__": "cc.Size",
@@ -6603,6 +6604,12 @@
           "__id__": 95
         }
       ],
+      "_color": {
+        "__type__": "cc.Color",
+        "r": 245,
+        "g": 248,
+        "b": 244
+      },
       "_contentSize": {
         "__type__": "cc.Size",
         "width": 420,

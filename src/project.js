@@ -473,14 +473,55 @@ window.__require = function e(t, n, o) {
       s = function (e) {
         function t() {
           var t = null !== e && e.apply(this, arguments) || this;
-          return t.adsbutton = [], t.adsbutton2 = [], t.caidia = [], t.fllows = [], t.fruit = [], t.guozhiZ = [], t.guozhiL = [], t.fruitL = [], t.TGColors = [], t
+          return t.adsbutton = [], t.adsbutton2 = [], t.caidia = [], t.fllows = [], t.fruit = [], t.guozhiZ = [], t.guozhiL = [], t.fruitL = [], t.TGColors = [],
+            t.fruitVersions = {}, t.currentVersion = 'ancient', t._versionsLoaded = !1, t
         }
 
         var n;
         return o(t, e), n = t, t.prototype.onLoad = function () {
           null != n.Instance && n.Instance.destroy(), n.Instance = this
         }, t.prototype.start = function () {
-          this.TGColors.push("f43df7", "ef4126", "6ff814", "32cdf9", "fff02c", "f43df7", "fb4626", "6ff814", "50f7f0", "fff02c")
+          this.TGColors.push("f43df7", "ef4126", "6ff814", "32cdf9", "fff02c", "f43df7", "fb4626", "6ff814", "50f7f0", "fff02c"),
+          this.fruitVersions['ancient'] = this.fruit.slice()
+        }, t.prototype.loadAllVersions = function (r) {
+          var o = this, c = ['modern', 'mix'], a = { modern: 'res/raw-assets/现代苏轼/', mix: 'res/raw-assets/混搭苏轼/' }, i = 0, s = c.length;
+          function u() { i++, i >= s && (o._versionsLoaded = !0, r && r()) }
+          c.forEach(function (e) {
+            if (o.fruitVersions[e]) { u(); return }
+            for (var t = [], n = 0; n < 11; n++) t.push(a[e] + (n + 1) + '.png');
+            o._loadVersionImages(e, t, u)
+          })
+        }, t.prototype._loadVersionImages = function (e, t, n) {
+          for (var o = this, c = [], a = 0; a < t.length; a++) !function (a) {
+            cc.loader.load({ url: t[a], type: 'png' }, function (i, r) {
+              i ? console.error('Failed to load', t[a], i) : (c[a] = new cc.SpriteFrame(r)), a === t.length - 1 && (o.fruitVersions[e] = c, n && n())
+            })
+          }(a)
+        }, t.prototype.switchVersion = function (e) {
+          if (!this.fruitVersions[e]) { console.warn('Version not loaded:', e); return }
+          this.currentVersion = e
+        }, t.prototype.getFruit = function (e) {
+          var t = this.fruitVersions[this.currentVersion];
+          return t && t[e] ? t[e] : this.fruit[e]
+        }, t.prototype.refreshAllFruits = function () {
+          var e = cc.find('Canvas/fruitNode');
+          if (e) for (var t = 0; t < e.children.length; t++) {
+            var n = e.children[t], o = n.getComponent('fruitData');
+            if (o) {
+              var c = this.getFruit(o.fruitNumber);
+              n.getComponent(cc.Sprite) && (n.getComponent(cc.Sprite).spriteFrame = c),
+              n.children[0] && n.children[0].getComponent(cc.Sprite) && (n.children[0].getComponent(cc.Sprite).spriteFrame = c)
+            }
+          }
+          var a = cc.find('Canvas/lineNode');
+          if (a) for (var i = 0; i < a.children.length; i++) {
+            var s = a.children[i], r = s.getComponent('fruitData');
+            if (r) {
+              var l = this.getFruit(r.fruitNumber);
+              s.getComponent(cc.Sprite) && (s.getComponent(cc.Sprite).spriteFrame = l),
+              s.children[0] && s.children[0].getComponent(cc.Sprite) && (s.children[0].getComponent(cc.Sprite).spriteFrame = l)
+            }
+          }
         }, t.Instance = null, c([r(cc.SpriteFrame)], t.prototype, "adsbutton", void 0), c([r(cc.SpriteFrame)], t.prototype, "adsbutton2", void 0), c([r(cc.SpriteFrame)], t.prototype, "caidia", void 0), c([r(cc.SpriteFrame)], t.prototype, "fllows", void 0), c([r(cc.SpriteFrame)], t.prototype, "fruit", void 0), c([r(cc.SpriteFrame)], t.prototype, "guozhiZ", void 0), c([r(cc.SpriteFrame)], t.prototype, "guozhiL", void 0), c([r(cc.SpriteFrame)], t.prototype, "fruitL", void 0), t = n = c([i], t)
       }(cc.Component);
     n.default = s, cc._RF.pop()
@@ -1200,8 +1241,8 @@ window.__require = function e(t, n, o) {
           t.prototype.createOneFruit = function (e) {
             var t = this, n = cc.instantiate(this.fruitPre);
             n.parent = this.lineNode;
-            n.getComponent(cc.Sprite).spriteFrame = d.default.Instance.fruit[e];
-            n.children[0].getComponent(cc.Sprite).spriteFrame = d.default.Instance.fruit[e];
+            n.getComponent(cc.Sprite).spriteFrame = d.default.Instance.getFruit(e);
+            n.children[0].getComponent(cc.Sprite).spriteFrame = d.default.Instance.getFruit(e);
             n.getComponent("fruitData").fruitNumber = e;
             n.position = this.lineNode.children[1].position;
             n.scale = 0;
@@ -1224,7 +1265,7 @@ window.__require = function e(t, n, o) {
             }).start()
           }, t.prototype.createLevelUpFruit = function (e, t) {
           var o = cc.instantiate(this.fruitPre);
-          o.parent = this.fruitNode, o.getComponent(cc.Sprite).spriteFrame = d.default.Instance.fruit[e], o.children[0].getComponent(cc.Sprite).spriteFrame = d.default.Instance.fruit[e], o.getComponent("fruitData").fruitNumber = e, o.position = t, o.scale = 0, o.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, -100), o.getComponent(cc.PhysicsCircleCollider).radius = o.height / 2, o.getComponent(cc.PhysicsCircleCollider).apply(), cc.tween(o).to(.5, {
+          o.parent = this.fruitNode, o.getComponent(cc.Sprite).spriteFrame = d.default.Instance.getFruit(e), o.children[0].getComponent(cc.Sprite).spriteFrame = d.default.Instance.getFruit(e), o.getComponent("fruitData").fruitNumber = e, o.position = t, o.scale = 0, o.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, -100), o.getComponent(cc.PhysicsCircleCollider).radius = o.height / 2, o.getComponent(cc.PhysicsCircleCollider).apply(), cc.tween(o).to(.5, {
             scale: 1
           }, {
             easing: "backOut"
@@ -2088,6 +2129,14 @@ window.__require = function e(t, n, o) {
               e.walk(function (e) {
                 var t = e.getComponent(cc.Label);
                 t && t._applySuSongFont && t._applySuSongFont()
+              })
+            }
+            var dl = __require("DynamicLoad");
+            if (dl && dl.default && dl.default.Instance) {
+              var ver = window._suGameVersion || 'ancient';
+              dl.default.Instance.loadAllVersions(function () {
+                dl.default.Instance.switchVersion(ver);
+                dl.default.Instance.refreshAllFruits()
               })
             }
           });
@@ -3504,13 +3553,13 @@ window.__require = function e(t, n, o) {
                   opacity: 150
                 }).start();
                 var c = new cc.Node;
-                c.addComponent(cc.Sprite).spriteFrame = l.default.Instance.fruit[reverseLevelUp ? 0 : 10], c.parent = cc.find("Canvas/upEffectParent"), c.position = cc.v2(0, -500), c.scale = 0;
+                c.addComponent(cc.Sprite).spriteFrame = l.default.Instance.getFruit(reverseLevelUp ? 0 : 10), c.parent = cc.find("Canvas/upEffectParent"), c.position = cc.v2(0, -500), c.scale = 0;
                 var r = new cc.Node;
                 r.addComponent(cc.Sprite).spriteFrame = l.default.Instance.caidia[6], r.scale = 3, r.parent = c, r.position = cc.v2(0), cc.tween(r).by(5, {
                   angle: 360
                 }).repeatForever().start();
                 var s = new cc.Node;
-                s.addComponent(cc.Sprite).spriteFrame = l.default.Instance.fruit[reverseLevelUp ? 0 : 10], s.parent = c, s.position = cc.v2(0), d.default.Instance.Play(4, !1, 1), i.default.Instance.ribbonEffect(cc.v2(0, 0)), c.runAction(cc.sequence(cc.spawn(cc.jumpBy(1, 0, 0, 300, 1), cc.scaleTo(1, 1)), cc.delayTime(1), cc.spawn(cc.moveTo(1, cc.v2(0, 500)), cc.scaleTo(1, 0)), cc.callFunc(function () {
+                s.addComponent(cc.Sprite).spriteFrame = l.default.Instance.getFruit(reverseLevelUp ? 0 : 10), s.parent = c, s.position = cc.v2(0), d.default.Instance.Play(4, !1, 1), i.default.Instance.ribbonEffect(cc.v2(0, 0)), c.runAction(cc.sequence(cc.spawn(cc.jumpBy(1, 0, 0, 300, 1), cc.scaleTo(1, 1)), cc.delayTime(1), cc.spawn(cc.moveTo(1, cc.v2(0, 500)), cc.scaleTo(1, 0)), cc.callFunc(function () {
                   a.default.score += 100, u.default.Instance.SetScoreTween(a.default.score), e.active = !1, a.default.playerTouch = !0, c.destroy()
                 }))), n.node.active = !1, t.node.active = !1, n.node.destroy(), t.node.destroy()
               }).start()))

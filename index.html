@@ -81,15 +81,15 @@
         </div>
 
         <div class="entry-cards">
-            <div class="entry-card" data-entry="ancient" id="cardAncient">
+            <div class="entry-card" data-entry="ancient" data-version="ancient" id="cardAncient">
                 <div class="entry-card-title">古代版</div>
                 <div class="entry-card-sub">古画像苏轼</div>
             </div>
-            <div class="entry-card disabled" data-entry="modern">
+            <div class="entry-card" data-entry="modern" data-version="modern">
                 <div class="entry-card-title">现代版</div>
                 <div class="entry-card-sub">现代ip苏轼</div>
             </div>
-            <div class="entry-card disabled" data-entry="mix">
+            <div class="entry-card" data-entry="mix" data-version="mix">
                 <div class="entry-card-title">混搭版</div>
                 <div class="entry-card-sub">两者兼具</div>
             </div>
@@ -273,7 +273,8 @@
 
     <!-- 首页入口逻辑：启动游戏加载与引擎 -->
     <script type="text/javascript">
-        window._suStartGame = function () {
+        window._suStartGame = function (version) {
+            window._suGameVersion = version || 'ancient';
             var home = document.getElementById('homePage');
             var game = document.getElementById('gamePage');
             if (home) { home.style.display = 'none'; }
@@ -305,15 +306,10 @@
         };
 
         (function initHome() {
-            var c1 = document.getElementById('cardAncient');
-            if (c1) {
-                c1.addEventListener('click', function () {
-                    window._suStartGame();
-                });
-            }
-            document.querySelectorAll('.entry-card.disabled').forEach(function (el) {
-                el.addEventListener('click', function (e) {
-                    e.preventDefault();
+            document.querySelectorAll('.entry-card').forEach(function (el) {
+                el.addEventListener('click', function () {
+                    var version = el.getAttribute('data-version') || 'ancient';
+                    window._suStartGame(version);
                 });
             });
         })();

@@ -1039,6 +1039,7 @@ window.__require = function e(t, n, o) {
       i = e("../Common/Utils"),
       r = e("./MainGameUi"),
       s = e("../common/PlayerInfo"),
+      f = e("../Common/SpriteManager"),
       l = cc._decorator,
       u = l.ccclass,
       d = l.property,
@@ -1061,12 +1062,20 @@ window.__require = function e(t, n, o) {
             scale: .8
           }).to(1, {
             scale: .9
-          }).union().repeatForever().start()
+          }).union().repeatForever().start();
+          var o = this;
+          this.scheduleOnce(function () {
+            if (o.adsButton2 && o.adsButton2.children[0]) {
+              var c = f.default.Instance.GetSpriteFrame("home");
+              c && (o.adsButton2.children[0].getComponent(cc.Sprite).spriteFrame = c)
+            }
+          }, .1)
         }, t.prototype.update = function (e) {
         }, t.prototype.adsButtonFunc2 = function () {
-          if (adLink) {
-            window.location.href = adLink
-          }
+          var home = document.getElementById('homePage');
+          var game = document.getElementById('gamePage');
+          if (home && game) { home.style.display = 'block'; game.style.display = 'none'; }
+          cc.game.pause()
         }, t.prototype.bannerButtonFunc = function () {
           if (adLink) {
             window.location.href = adLink

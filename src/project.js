@@ -2159,7 +2159,7 @@ window.__require = function e(t, n, o) {
             i = c.substring(c.lastIndexOf("/game/") + 1, c.length).split("/");
           i.length >= 2 && (a = i[1]), this.gameHttpId = a, cc.log("gameId", a);
           e.substring(e.lastIndexOf("//") + 4, e.lastIndexOf("com") + 3);
-          this.moreGameUrl = "https://bigstop.sudongpo521.cn/"
+          this.moreGameUrl = "https://n-1.sudongpo521.cn/"
         },
         gameOverShowText: function (e, t) {
           this.ajaxLoad("https://www.wesane.com/admin.php/Gamescore/saveGamescore", "gameScore=" + e + "&gameId=" + this.gameHttpId + "&gameType=" + t, this.scoreResult)

@@ -315,12 +315,49 @@
         };
 
         (function initHome() {
+            var HASH_VERSION_MAP = {
+                'old': 'ancient',
+                'new': 'modern',
+                'mix': 'mix'
+            };
+
+            function routeByHash() {
+                var hash = window.location.hash.replace(/^#\/?/, '');
+                if (!hash) {
+                    var home = document.getElementById('homePage');
+                    var game = document.getElementById('gamePage');
+                    if (home) { home.style.display = 'block'; }
+                    if (game) { game.style.display = 'none'; }
+                    return;
+                }
+                var version = HASH_VERSION_MAP[hash];
+                if (version) {
+                    window._suStartGame(version);
+                }
+            }
+
             document.querySelectorAll('.entry-card').forEach(function (el) {
                 el.addEventListener('click', function () {
                     var version = el.getAttribute('data-version') || 'ancient';
-                    window._suStartGame(version);
+                    var hashKey = null;
+                    for (var k in HASH_VERSION_MAP) {
+                        if (HASH_VERSION_MAP[k] === version) { hashKey = k; break; }
+                    }
+                    if (hashKey) {
+                        var newHash = '#/' + hashKey;
+                        if (window.location.hash === newHash) {
+                            routeByHash();
+                        } else {
+                            window.location.hash = newHash;
+                        }
+                    } else {
+                        window._suStartGame(version);
+                    }
                 });
             });
+
+            window.addEventListener('hashchange', routeByHash);
+            routeByHash();
         })();
     </script>
 

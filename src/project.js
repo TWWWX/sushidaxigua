@@ -1452,7 +1452,7 @@ window.__require = function e(t, n, o) {
     cc._RF.push(t, "197e1hfNnxIcJx73V3VhUxY", "HttpManagerJs");
     var a = e("GameConfig"),
       i = (c(o = {
-        URL: "https://bigstop.sudongpo521.cn/",
+        URL: "https://n-64.sudongpo521.cn/",
         cacheList: null,
         isBusy: null,
         req: null,

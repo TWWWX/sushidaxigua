@@ -2159,7 +2159,7 @@ window.__require = function e(t, n, o) {
             i = c.substring(c.lastIndexOf("/game/") + 1, c.length).split("/");
           i.length >= 2 && (a = i[1]), this.gameHttpId = a, cc.log("gameId", a);
           e.substring(e.lastIndexOf("//") + 4, e.lastIndexOf("com") + 3);
-          this.moreGameUrl = "https://n-1.sudongpo521.cn/"
+          this.moreGameUrl = "https://bigstop.sudongpo521.cn/"
         },
         gameOverShowText: function (e, t) {
           this.ajaxLoad("https://www.wesane.com/admin.php/Gamescore/saveGamescore", "gameScore=" + e + "&gameId=" + this.gameHttpId + "&gameType=" + t, this.scoreResult)
@@ -3672,11 +3672,12 @@ window.__require = function e(t, n, o) {
         }), e.leftBtn.node.on(cc.Node.EventType.TOUCH_START, function (e) {
         }), e.leftBtn.node.on(cc.Node.EventType.TOUCH_END, function (e) {
           c.GAME_OVER_BOOL = !0, c.gameScore = 0, o.loadingScene("MainGameScene")
-        }), e.rightBtn.node.on(cc.Node.EventType.TOUCH_START, function (e) {
-        }), e.rightBtn.node.on(cc.Node.EventType.TOUCH_END, function (t) {
-          var n = null;
-          n = null != e.rightBtnGameUrl && "" != e.rightBtnGameUrl ? e.rightBtnGameUrl : e.tempArr[1], window.location.href = n
         })
+        // , e.rightBtn.node.on(cc.Node.EventType.TOUCH_START, function (e) {
+        // }), e.rightBtn.node.on(cc.Node.EventType.TOUCH_END, function (t) {
+        //   var n = null;
+        //   n = null != e.rightBtnGameUrl && "" != e.rightBtnGameUrl ? e.rightBtnGameUrl : e.tempArr[1], window.location.href = n
+        // })
       },
       getContentByScore: function (e, t) {
         var n = "\u6211\u771f\u662f\u592a\u5389\u5bb3\uff0c\u5728" + t + "\u4e2d\u7adf\u7136\u5f97\u4e861\u5206\uff0c\u5168\u7403\u53ea\u67091\u4e2a\u4eba\u5f971\u5206\uff01",

@@ -359,6 +359,31 @@
             window.addEventListener('hashchange', routeByHash);
             routeByHash();
         })();
+
+        // 测试快捷键：进入游戏后按 F2 直接弹出合成结束结果页
+        window.addEventListener('keydown', function (e) {
+            if (e.key !== 'F2') { return; }
+            if (typeof cc === 'undefined' || !cc.find) {
+                console.warn('[测试] cocos 引擎尚未就绪，请先进入游戏（如 #/old）等待加载完成');
+                return;
+            }
+            try {
+                var gmNode = cc.find('Canvas/gameManager');
+                if (!gmNode) {
+                    console.warn('[测试] 未找到 Canvas/gameManager 节点，请确保已进入游戏');
+                    return;
+                }
+                var gm = gmNode.getComponent('GameManager');
+                if (!gm || typeof gm.GameOver !== 'function') {
+                    console.warn('[测试] GameManager.GameOver 不可用');
+                    return;
+                }
+                gm.GameOver();
+                console.log('[测试] 已触发 GameOver，结果页已显示');
+            } catch (err) {
+                console.error('[测试] 触发失败:', err);
+            }
+        });
     </script>
 
 

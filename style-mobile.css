@@ -8,15 +8,19 @@ html {
 body,
 canvas,
 div {
-    display: block;
     outline: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     -khtml-user-select: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    user-select: none;
+}
+
+/* canvas / Cocos 容器需要 display:block, 但首页使用 flex 时不应被全局覆盖 */
+canvas,
+#Cocos2dGameContainer {
+    display: block;
 }
 
 /* Remove spin of input type number */
@@ -34,7 +38,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100vh;
+    height: 100%;
     padding: 0;
     border: 0;
     margin: 0;
@@ -43,12 +47,8 @@ body {
     background-color: #f5f3ef;
     text-align: center;
     font-family: "Noto Serif SC", "Songti SC", "SimSun", "STSong", serif;
-    display: flex;
-    flex-direction: column;
-    /* 首页可能超出一屏，游戏内 overflow:hidden 由 #gamePage 自身及 canvas 控制 */
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-width: 100%;
+    /* cocos 旋转/游戏场景依赖 body overflow hidden,不得随意放开 */
+    overflow: hidden;
 }
 
 #Cocos2dGameContainer {
@@ -136,16 +136,22 @@ p.footer {
 }
 
 /* ========== 首页 ========== */
+/*
+   #homePage 必须 absolute 叠在 body 之上覆盖 cocos 画布,
+   又因为 body 是 absolute height 100%,这里用 overflow-y:auto + height:100%
+   单独承担首页滚动,避免放开 body.overflow 影响 cocos 层旋转/裁剪。
+*/
 #homePage {
-    position: relative;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100vh;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
     background: #f5f3ef;
     z-index: 10000;
     box-sizing: border-box;
-    padding: 0;
     font-family: "Noto Serif SC", "Songti SC", "SimSun", "STSong", serif;
     color: #2c3e2c;
 }
@@ -190,11 +196,12 @@ p.footer {
 /* ========== 3.1 标题区 ========== */
 .home-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin: 0 0 40px;
+    display: block;
 }
 
 .home-title-row {
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
     gap: 20px;
@@ -204,6 +211,7 @@ p.footer {
     flex: 0 1 100px;
     height: 1px;
     background: #b8cdb8;
+    display: block;
 }
 
 @media (max-width: 700px) {
@@ -216,39 +224,43 @@ p.footer {
 }
 
 .home-title {
-    font-size: 28px;
+    font-size: 28px !important;
     letter-spacing: 8px;
     font-weight: 700;
     color: #2c3e2c;
     margin: 0;
+    padding: 0;
     white-space: nowrap;
+    display: block;
 }
 
 @media (max-width: 700px) {
     .home-title {
-        font-size: 18px;
+        font-size: 18px !important;
         letter-spacing: 4px;
     }
 }
 
 .home-subtitle {
-    font-size: 14px;
+    font-size: 14px !important;
     letter-spacing: 4px;
     color: #6b866b;
     margin: 10px 0 0;
+    padding: 0;
     text-align: center;
+    display: block;
 }
 
 @media (max-width: 700px) {
     .home-subtitle {
-        font-size: 11px;
+        font-size: 11px !important;
         letter-spacing: 2px;
     }
 }
 
 /* ========== 3.2 作者说明框 ========== */
 .author-note-wrapper {
-    display: flex;
+    display: flex !important;
     align-items: stretch;
     justify-content: center;
     max-width: 640px;
@@ -269,20 +281,21 @@ p.footer {
     flex-shrink: 0;
     background: #2c3e2c;
     align-self: stretch;
+    display: block;
 }
 
 .author-note-box {
-    flex: 1;
+    flex: 1 1 auto;
     background: #faf9f6;
     border: 1px dashed #b8cdb8;
     border-left: none;
     min-height: 160px;
     padding: 24px 20px;
     box-sizing: border-box;
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
-    font-size: 15px;
+    font-size: 15px !important;
     line-height: 2;
     letter-spacing: 1px;
     color: #2c3e2c;
@@ -294,18 +307,18 @@ p.footer {
     .author-note-box {
         min-height: 120px;
         padding: 20px 16px;
-        font-size: 12px;
+        font-size: 12px !important;
     }
 }
 
 /* ========== 3.3 入口卡片组 ========== */
 .entry-cards {
-    display: flex;
+    display: flex !important;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
     gap: 24px;
-    margin-bottom: 44px;
+    margin: 0 0 44px;
 }
 
 @media (max-width: 700px) {
@@ -325,6 +338,7 @@ p.footer {
     text-align: left;
     transition: all 0.25s ease;
     font-family: "Noto Serif SC", "Songti SC", "SimSun", "STSong", serif;
+    display: block;
 }
 
 @media (max-width: 700px) {
@@ -345,36 +359,40 @@ p.footer {
     height: 4px;
     width: 100%;
     background: #2c3e2c;
+    display: block;
 }
 
 .card-body {
     padding: 8px 12px;
     box-sizing: border-box;
+    display: block;
 }
 
 .card-title {
-    font-size: 15px;
+    font-size: 15px !important;
     font-weight: 600;
     letter-spacing: 2px;
     color: #2c3e2c;
+    display: block;
 }
 
 @media (max-width: 700px) {
     .card-title {
-        font-size: 13px;
+        font-size: 13px !important;
     }
 }
 
 .card-subtitle {
-    font-size: 13px;
+    font-size: 13px !important;
     letter-spacing: 1px;
     color: #6b866b;
     margin-top: 4px;
+    display: block;
 }
 
 @media (max-width: 700px) {
     .card-subtitle {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 }
 
@@ -383,13 +401,11 @@ p.footer {
     margin: 44px 0 20px;
     text-align: center;
     line-height: 1.8;
-}
-
-.random-poem {
     font-size: 12px;
     letter-spacing: 1px;
     color: #6b866b;
     opacity: 0.7;
+    display: block;
 }
 
 .random-poem-title {
@@ -399,7 +415,7 @@ p.footer {
     opacity: 0.8;
 }
 
-/* 旧类名兼容（保留以避免旧引用失效） */
+/* 旧类名兼容（隐藏已被新结构替代的旧DOM，避免残留/重复显示） */
 .footer-quote,
 .author-words,
 .author-words-bar,
@@ -407,10 +423,10 @@ p.footer {
 .author-words-content,
 .entry-card-title,
 .entry-card-sub {
-    display: none;
+    display: none !important;
 }
 
-/* 游戏页初始隐藏 */
+/* 游戏页初始隐藏，且自身保持 overflow hidden 兼容 cocos 旋转 */
 #gamePage {
     display: none;
     position: absolute;

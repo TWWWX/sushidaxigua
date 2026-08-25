@@ -309,6 +309,31 @@ p.footer {
 .__su-font-preloader .p600 { font-weight: 600; }
 .__su-font-preloader .p700 { font-weight: 700; }
 
+/* 移动端（手机屏）：首页标题更小、整体离顶端更近；不影响桌面端显示 */
+@media (max-width: 640px) {
+    #homePage {
+        padding: 28px 16px 32px;
+    }
+
+    .home-title {
+        font-size: 24px;
+        letter-spacing: 4px;
+        margin-bottom: 8px;
+    }
+
+    .home-title::before,
+    .home-title::after {
+        max-width: 48px;
+    }
+
+    .home-title::before { margin-right: 10px; }
+    .home-title::after  { margin-left:  10px; }
+
+    .home-subtitle {
+        margin-bottom: 32px;
+    }
+}
+
 /* 游戏页初始隐藏 */
 #gamePage {
     display: none;

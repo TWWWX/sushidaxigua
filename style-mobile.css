@@ -289,6 +289,26 @@ p.footer {
     font-family: "Noto Serif SC", "Songti SC", "SimSun", "STSong", serif;
 }
 
+/* 强制预热 Noto Serif SC：用多字重中文文本触发字形下载，防止页面出现 FOUT/回退宋体 */
+.__su-font-preloader {
+    position: fixed;
+    left: -99999px;
+    top: -99999px;
+    visibility: hidden;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: "Noto Serif SC", "Songti SC", "SimSun", "STSong", serif;
+    font-size: 12px;
+}
+
+.__su-font-preloader .p400 { font-weight: 400; }
+.__su-font-preloader .p500 { font-weight: 500; }
+.__su-font-preloader .p600 { font-weight: 600; }
+.__su-font-preloader .p700 { font-weight: 700; }
+
 /* 游戏页初始隐藏 */
 #gamePage {
     display: none;

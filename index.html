@@ -38,6 +38,35 @@
     <!--<link rel="apple-touch-icon" href=".png" />-->
     <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
 
+    <!-- 强制加载思源宋体：preconnect + Google Fonts 样式 + 兜底 FontFace API -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" type="text/css" href="style-mobile.css" />
+
+    <script>
+        (function forceFonts() {
+            var families = [
+                '400 1em "Noto Serif SC"',
+                '700 1em "Noto Serif SC"',
+                '600 1em "Noto Serif SC"'
+            ];
+            function load() {
+                if (document.fonts && typeof document.fonts.load === 'function') {
+                    families.forEach(function (f) {
+                        try { document.fonts.load(f).then(function () {}, function () {}); } catch (e) {}
+                    });
+                }
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', load);
+                document.addEventListener('load', load);
+            } else {
+                load();
+            }
+        })();
+    </script>
 
     <!-- <script>
         pushHistory();
@@ -62,11 +91,17 @@
         }
     </script>-->
 
-    <link rel="stylesheet" type="text/css" href="style-mobile.css" />
-
 </head>
 
 <body style="margin: 0; background: #f5f3ef; font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', 'STSong', serif;" align="center">
+
+    <!-- 字体预热：加载 Noto Serif SC 多字重所需字形，避免 FOUT/回退宋体 -->
+    <div class="__su-font-preloader" aria-hidden="true">
+        <span class="p400">合成大苏轼胜固欣然败亦可喜古代版现代版混搭版东坡墙技术支持图片提供欢迎关注手机游玩浏览器加载建议手机游玩电脑可将浏览器拉窄作者说明合成大西瓜观棋苏轼击败全球玩家当前关卡已完成</span>
+        <span class="p500">合成大苏轼胜固欣然败亦可喜古代版现代版混搭版东坡墙</span>
+        <span class="p600">合成大苏轼胜固欣然败亦可喜古代版现代版混搭版东坡墙</span>
+        <span class="p700">合成大苏轼胜固欣然败亦可喜古代版现代版混搭版东坡墙</span>
+    </div>
 
     <!-- ========== 首页 ========== -->
     <div id="homePage">

@@ -217,6 +217,7 @@ window.boot = function() {
 
     var option = {
         id: 'GameCanvas',
+        renderMode: 2, // 0=自动, 1=强制 WebGL, 2=强制 Canvas 2D
         scenes: settings.scenes,
         debugMode: settings.debug ? cc.debug.DebugMode.INFO : cc.debug.DebugMode.ERROR,
         showFPS: !false && settings.debug,

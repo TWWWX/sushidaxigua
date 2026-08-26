@@ -217,7 +217,7 @@ window.boot = function() {
 
     var option = {
         id: 'GameCanvas',
-        renderMode: 2, // 0=自动, 1=强制 WebGL, 2=强制 Canvas 2D
+        renderMode: 1, // 此引擎版本: 0=自动, 1=强制 Canvas 2D, 2=强制 WebGL
         scenes: settings.scenes,
         debugMode: settings.debug ? cc.debug.DebugMode.INFO : cc.debug.DebugMode.ERROR,
         showFPS: !false && settings.debug,
@@ -225,6 +225,11 @@ window.boot = function() {
         jsList: jsList,
         groupList: settings.groupList,
         collisionMatrix: settings.collisionMatrix,
+    }
+
+    // 彻底绕开 WebGL：把 opengl 能力位置 false，让自动模式也只能走 Canvas 2D
+    if (cc.sys && cc.sys.capabilities) {
+        cc.sys.capabilities.opengl = false;
     }
 
     // init assets

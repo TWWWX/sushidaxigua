@@ -327,23 +327,31 @@
             if (home) { home.style.display = 'none'; }
             if (game) { game.style.display = 'block'; }
 
-            // 二次及以后进入：引擎已 boot，仅切换 UI，尝试就地切换水果版本
+            // 二次及以后进入：引擎已 boot，仅切 UI 并重开新局
+            // 引擎内 EVENT_AFTER_SCENE_LAUNCH 会自动读 window._suGameVersion
+            // 调 loadAllVersions + switchVersion + refreshAllFruits 切换水果版本
             if (window._suEngineBooted) {
-                if (typeof __require === 'function') {
-                    try {
-                        var DynamicLoad = __require("DynamicLoad");
-                        var inst = DynamicLoad && DynamicLoad.default && DynamicLoad.default.Instance;
-                        if (inst && typeof inst.switchVersion === 'function') {
-                            inst.switchVersion(window._suGameVersion);
-                            console.log('[路由] 已就地切换版本:', window._suGameVersion);
+                if (typeof cc === 'undefined' || !cc.find) {
+                    console.warn('[路由] cocos 引擎尚未就绪，保持当前游戏运行');
+                    return;
+                }
+                try {
+                    var gmNode = cc.find('Canvas/gameManager');
+                    var gm = gmNode && gmNode.getComponent('GameManager');
+                    if (gm && typeof gm.RestartGame === 'function') {
+                        gm.RestartGame();
+                        console.log('[路由] 已重开新一局，版本:', window._suGameVersion);
+                    } else {
+                        var MainGameJS = cc.find('Canvas').getComponent('MainGameJS');
+                        if (MainGameJS && typeof MainGameJS.RestartGame === 'function') {
+                            MainGameJS.RestartGame();
+                            console.log('[路由] 已重开新一局(MainGameJS)，版本:', window._suGameVersion);
                         } else {
-                            console.warn('[路由] DynamicLoad.switchVersion 不可用，保持当前游戏运行');
+                            console.warn('[路由] RestartGame 不可用，保持当前游戏运行');
                         }
-                    } catch (err) {
-                        console.warn('[路由] 就地切换版本失败，保持当前游戏运行:', err);
                     }
-                } else {
-                    console.warn('[路由] __require 不可用，保持当前游戏运行');
+                } catch (err) {
+                    console.warn('[路由] 重开新局失败，保持当前游戏运行:', err);
                 }
                 return;
             }

@@ -391,16 +391,15 @@
             <!-- 赞赏入口 -->
             <div class="donate-section">
                 <div class="donate-divider" aria-hidden="true"></div>
-                <button type="button" class="donate-link" id="donateLink">赞赏</button>
+                <button type="button" class="donate-link" id="donateLink">赞&ensp;赏</button>
             </div>
         </div>
 
         <!-- 赞赏弹窗 -->
         <div class="donate-modal" id="donateModal" hidden>
             <div class="donate-box">
-                <h4 class="donate-title">赞赏</h4>
+                <h4 class="donate-title">感谢您点进“赞赏”页面。</h4>
                 <div class="donate-text">
-                    <p>感谢您点进“赞赏”页面。</p>
                     <p>一些说明：<br>
                     1.本网站主办方为“东坡墙”——一个关于苏东坡的“墙”。我们目前在QQ、微信公众号、微博等平台都有账号，ID均为“东坡墙”，欢迎关注。<br>
                     2.“东坡墙”是非盈利组织，您所赞赏的所有钱款均将被用于网站域名续费、QQ黄钻、微博会员等平台运营开销，多余部分（如有）计划以“苏轼粉丝”的名义进行捐款、或购买周边举办投稿活动等，不会被用于个人私用。<br>
@@ -502,7 +501,8 @@
                 if (!hash) {
                     var home = document.getElementById('homePage');
                     var game = document.getElementById('gamePage');
-                    if (home) { home.style.display = 'block'; }
+                    // 清空内联 display 回归 CSS 控制（#homePage 是 flex 容器，写成 block 会破坏底部入口的 margin-top:auto 贴底布局）
+                    if (home) { home.style.display = ''; }
                     if (game) { game.style.display = 'none'; }
                     if (window._suHideCommentsPage) { window._suHideCommentsPage(); }
                     return;

@@ -356,8 +356,19 @@
   #commentsPage { padding: 24px 14px 40px; }
   .comments-page-title { font-size: 14px; }
   .rank-comments { padding: 14px; }
-  .comment-body { font-size: 12px; }
-  .comment-textarea { font-size: 12px; min-height: 64px; }
+  /* 评论相关字号整体再小一档 */
+  .comments-section-title { font-size: 14px; }
+  .page-like-btn { font-size: 12px; }
+  .comment-meta { font-size: 11px; }
+  .comment-body { font-size: 11px; }
+  .comment-like-button,
+  .comment-reply-button { font-size: 11px; }
+  .comment-empty { font-size: 12px; }
+  .comment-input,
+  .comment-textarea { font-size: 11px; min-height: 60px; }
+  .comment-send-btn { font-size: 12px; }
+  .comment-status { font-size: 11px; }
+  .comment-identity-bar { font-size: 11px; }
   .comment-modal-box { padding: 18px; }
   .donate-box { padding: 18px 14px; }
   .donate-title { font-size: 15px; }
@@ -379,13 +390,14 @@
   margin: 0 auto 18px;
 }
 
+/* 字距用 HTML 中的 en space 实现：letter-spacing 会在末字后多出一段，
+   导致下划线右侧多出一截（视觉上像多个空格） */
 .donate-link {
   border: none;
   background: transparent;
   color: #4a7a52;
   font-family: inherit;
   font-size: 14px;
-  letter-spacing: 6px;
   padding: 0 0 2px;
   cursor: pointer;
   text-decoration: underline;

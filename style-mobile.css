@@ -145,7 +145,9 @@ p.footer {
     background: #f5f3ef;
     z-index: 10000;
     box-sizing: border-box;
-    padding: 64px 24px 48px;
+    /* 纵向间距整体收紧：字体加载后内容增高，常见笔记本视口（约620px可用高度）下也不能溢出，
+       否则 margin-top:auto 失效、入口回缩 */
+    padding: 56px 24px 40px;
     font-family: "Noto Serif SC", "Songti SC", "SimSun", "STSong", serif;
     color: #2c3e2c;
 }
@@ -180,13 +182,13 @@ p.footer {
     font-size: 12px;
     color: #6b866b;
     letter-spacing: 2px;
-    margin: 0 0 45px;
+    margin: 0 0 32px;
 }
 
 /* 作者的话 */
 .author-words {
     max-width: 512px;
-    margin: 0 auto 35px;
+    margin: 0 auto 24px;
     display: flex;
     align-items: stretch;
     justify-content: center;
@@ -225,7 +227,7 @@ p.footer {
     font-size: 12px;
     line-height: 1.75;
     color: #2c3e2c;
-    text-align: center;
+    text-align: left;
     white-space: normal;
     font-family: "Noto Serif SC", "Songti SC", "SimSun", "STSong", serif;
 }
@@ -288,7 +290,7 @@ p.footer {
 }
 
 .footer-quote {
-    margin: 30px auto 0;
+    margin: 20px auto 0;
     padding-bottom: 36px; /* 与底部「评论与赞赏」入口的最小间距（flex 中入口 margin-top:auto 不足时兜底） */
     text-align: center;
     font-size: 12px;

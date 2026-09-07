@@ -138,6 +138,10 @@ p.footer {
     overflow-y: auto;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
+    /* flex 列布局：底部「评论与赞赏」入口 margin-top:auto 吸收剩余空间，屏高足够时贴底 */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     background: #f5f3ef;
     z-index: 10000;
     box-sizing: border-box;
@@ -285,6 +289,7 @@ p.footer {
 
 .footer-quote {
     margin: 30px auto 0;
+    padding-bottom: 36px; /* 与底部「评论与赞赏」入口的最小间距（flex 中入口 margin-top:auto 不足时兜底） */
     text-align: center;
     font-size: 12px;
     line-height: 1.8;

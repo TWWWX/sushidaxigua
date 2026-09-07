@@ -155,7 +155,7 @@
 
         <!-- 评论区入口 -->
         <div class="comments-entry" id="commentsEntry" role="button" tabindex="0">
-            <div class="comments-entry-title">评论区</div>
+            <div class="comments-entry-title">评论与赞赏</div>
         </div>
     </div>
 
@@ -340,15 +340,14 @@
             <div class="comments-page-header">
                 <button type="button" class="comments-back-btn" id="commentsBackBtn">← 返回首页</button>
                 <div class="comments-page-title-wrap">
-                    <div class="comments-title-deco-bar"></div>
-                    <h2 class="comments-page-title">合成大苏轼 · 评论区</h2>
+                    <h2 class="comments-page-title">评论区</h2>
                 </div>
                 <span style="width:86px;" aria-hidden="true"></span>
             </div>
 
             <div class="comments-page-like-bar">
                 <button class="page-like-btn" data-like-button data-path="/home">
-                    <span class="like-label">为合成大苏轼点赞</span>
+                    <span class="like-label">为苏轼点赞</span>
                     <span class="like-count">(<span data-like-count>0</span>)</span>
                 </button>
             </div>
@@ -386,6 +385,35 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+
+            <!-- 赞赏入口 -->
+            <div class="donate-section">
+                <div class="donate-divider" aria-hidden="true"></div>
+                <button type="button" class="donate-link" id="donateLink">赞赏</button>
+            </div>
+        </div>
+
+        <!-- 赞赏弹窗 -->
+        <div class="donate-modal" id="donateModal" hidden>
+            <div class="donate-box">
+                <h4 class="donate-title">赞赏</h4>
+                <div class="donate-text">
+                    <p>感谢您点进“赞赏”页面。</p>
+                    <p>一些说明：<br>
+                    1.本网站主办方为“东坡墙”——一个关于苏东坡的“墙”。我们目前在QQ、微信公众号、微博等平台都有账号，ID均为“东坡墙”，欢迎关注。<br>
+                    2.“东坡墙”是非盈利组织，您所赞赏的所有钱款均将被用于网站域名续费、QQ黄钻、微博会员等平台运营开销，多余部分（如有）计划以“苏轼粉丝”的名义进行捐款、或购买周边举办投稿活动等，不会被用于个人私用。<br>
+                    3.因为“东坡墙”并没有注册公司之类的主体，所以赞赏码扫开是墙一号机（兼财务）“娴菜无敌”的个人账号，这是正常的还请放心（？）<br>
+                    4.我们会在每年一月份公开上一年度的财务年报，如果您对“东坡墙”的运营收支感到疑惑或好奇，可以到墙号QQ（3301590656）的空间相册中查看。<br>
+                    5.您赞赏时的ID默认不会公示，如果您需要（主要是在墙的财务年报中）被公示感谢，可以在赞赏时备注。<br>
+                    6.再次感谢您愿意点进“赞赏”页面，谢谢！</p>
+                </div>
+                <div class="donate-qr">
+                    <img src="赞赏码.png" alt="赞赏码" />
+                </div>
+                <div class="donate-footer">
+                    <button type="button" class="donate-close-btn" id="donateCloseBtn">知道了</button>
                 </div>
             </div>
         </div>

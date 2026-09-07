@@ -3,9 +3,11 @@
    评论组件样式复用自 sushiNxuan64（urthreads），配色与首页一致
    ============================================================ */
 
-/* 首页底部评论区入口：一行字，两侧各一条线（与首页标题装饰线同风格） */
+/* 首页底部评论区入口：一行字，两侧各一条线（与首页标题装饰线同风格）
+   margin-top:auto 在首页 flex 列布局下吸收剩余空间：屏高足够时贴底；
+   屏高不足时 auto 为 0，间距由 footer-quote 的 padding-bottom 保证 */
 .comments-entry {
-    margin: 36px auto 0;
+    margin-top: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,11 +39,15 @@
     color: #2c3e2c;
     letter-spacing: 4px;
     margin: 0;
-    transition: color 0.2s ease;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-color: #b8cdb8;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
 .comments-entry:hover .comments-entry-title {
     color: #4a7a52;
+    text-decoration-color: #4a7a52;
 }
 
 .comments-entry-sub {
@@ -82,36 +88,29 @@
 }
 
 .comments-back-btn {
-    /* 一行字一条线：参考 sushiNxuan64 的 back-link */
+    /* 对齐 sushiNxuan64 的 back-link：一行字，hover 时才出现下划线 */
     border: none;
-    border-bottom: 1px solid #b8cdb8;
     background: transparent;
     color: #4a7a52;
     font-family: inherit;
     font-size: 14px;
     letter-spacing: 1px;
-    padding: 0 2px 2px;
+    padding: 0;
     cursor: pointer;
     white-space: nowrap;
-    transition: color 0.2s ease, border-color 0.2s ease;
+    transition: color 0.2s ease;
 }
 
 .comments-back-btn:hover {
     color: #2c3e2c;
-    border-bottom-color: #2c3e2c;
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 .comments-page-title-wrap {
     flex: 1;
     min-width: 0;
     text-align: center;
-}
-
-.comments-title-deco-bar {
-    width: 28px;
-    height: 3px;
-    background: #2c3e2c;
-    margin: 0 auto 8px;
 }
 
 .comments-page-title {
@@ -360,4 +359,135 @@
   .comment-body { font-size: 12px; }
   .comment-textarea { font-size: 12px; min-height: 64px; }
   .comment-modal-box { padding: 18px; }
+  .donate-box { padding: 18px 14px; }
+  .donate-title { font-size: 15px; }
+  .donate-text { font-size: 12px; }
+  .donate-qr img { max-width: 220px; }
+}
+
+/* ========== 赞赏区（评论区页底部） ========== */
+.donate-section {
+  text-align: center;
+  margin-top: 28px;
+}
+
+/* 短细线分隔 */
+.donate-divider {
+  width: 48px;
+  height: 1px;
+  background: #b8cdb8;
+  margin: 0 auto 18px;
+}
+
+.donate-link {
+  border: none;
+  background: transparent;
+  color: #4a7a52;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 6px;
+  padding: 0 0 2px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-color: #b8cdb8;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.donate-link:hover {
+  color: #2c3e2c;
+  text-decoration-color: #2c3e2c;
+}
+
+/* ========== 赞赏弹窗（参考 sushiNxuan64 design提示组件 Modal 规范） ========== */
+.donate-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 62, 44, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10002;
+  padding: 20px;
+}
+
+.donate-modal[hidden] { display: none; }
+
+.donate-box {
+  background: #faf9f6;
+  border: 1px solid #b8cdb8;
+  box-shadow: 0 12px 40px rgba(44, 62, 44, 0.2);
+  width: 100%;
+  max-width: 560px;
+  max-height: 86vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 24px 26px;
+}
+
+.donate-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #2c3e2c;
+  margin: 0 0 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #b8cdb8;
+}
+
+.donate-text {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #2c3e2c;
+  text-align: left;
+}
+
+.donate-text p {
+  margin: 0 0 10px;
+}
+
+.donate-text p:last-child {
+  margin-bottom: 0;
+}
+
+.donate-qr {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.donate-qr img {
+  display: block;
+  margin: 0 auto;
+  max-width: 260px;
+  width: 70%;
+  height: auto;
+  border: 1px solid #b8cdb8;
+  background: #fff;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.donate-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.donate-close-btn {
+  padding: 6px 20px;
+  border: 1px solid #b8cdb8;
+  border-radius: 0;
+  background: #fff;
+  color: #2c3e2c;
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.donate-close-btn:hover {
+  background: #f5f8f4;
+  border-color: #4a7a52;
 }

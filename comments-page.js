@@ -52,6 +52,27 @@
     });
   }
 
+  // 赞赏弹窗：点击遮罩空白或「知道了」关闭
+  var donateLink = document.getElementById('donateLink');
+  var donateModal = document.getElementById('donateModal');
+  var donateCloseBtn = document.getElementById('donateCloseBtn');
+
+  function openDonateModal() {
+    if (donateModal) donateModal.hidden = false;
+  }
+
+  function closeDonateModal() {
+    if (donateModal) donateModal.hidden = true;
+  }
+
+  if (donateLink) donateLink.addEventListener('click', openDonateModal);
+  if (donateCloseBtn) donateCloseBtn.addEventListener('click', closeDonateModal);
+  if (donateModal) {
+    donateModal.addEventListener('click', function (event) {
+      if (event.target === donateModal) closeDonateModal();
+    });
+  }
+
   // 暴露给 index.html 的 hash 路由
   window._suShowCommentsPage = showCommentsPage;
   window._suHideCommentsPage = hideCommentsPage;

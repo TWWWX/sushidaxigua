@@ -345,13 +345,6 @@
                 <span style="width:86px;" aria-hidden="true"></span>
             </div>
 
-            <div class="comments-page-like-bar">
-                <button class="page-like-btn" data-like-button data-path="/ranking">
-                    <span class="like-label">为苏轼点赞</span>
-                    <span class="like-count">(<span data-like-count>0</span>)</span>
-                </button>
-            </div>
-
             <div
               class="rank-comments"
               data-worker-comments
@@ -366,7 +359,7 @@
                 <div class="comment-list-wrap" data-comment-list></div>
                 <div class="comment-status" data-comment-status></div>
                 <form class="comment-draft-form" data-comment-draft-form>
-                    <textarea name="content" class="comment-textarea" placeholder="写下你的评论…" required maxlength="500"></textarea>
+                    <textarea name="content" class="comment-textarea" placeholder="写下你的评论……" required maxlength="500"></textarea>
                     <div class="comment-identity-bar" data-comment-identity-bar hidden>
                         <span class="comment-identity-name" data-comment-identity-name></span>
                         <button type="button" class="comment-identity-edit" data-comment-identity-edit>修改</button>
@@ -392,6 +385,12 @@
             <!-- 赞赏入口 -->
             <div class="donate-section">
                 <div class="donate-divider" aria-hidden="true"></div>
+                <div class="comments-page-like-bar">
+                    <button class="page-like-btn" data-like-button data-path="/ranking">
+                        <span class="like-label">为苏轼点赞</span>
+                        <span class="like-count">(<span data-like-count>0</span>)</span>
+                    </button>
+                </div>
                 <button type="button" class="donate-link" id="donateLink">赞&ensp;赏</button>
             </div>
         </div>
@@ -410,12 +409,17 @@
                     6.再次感谢您愿意点进“赞赏”页面，谢谢！</p>
                 </div>
                 <div class="donate-qr">
-                    <img src="赞赏码.png" alt="赞赏码" />
+                    <img src="赞赏码.png" alt="赞赏码" id="donateQrImg" title="点击放大" />
                 </div>
                 <div class="donate-footer">
                     <button type="button" class="donate-close-btn" id="donateCloseBtn">知道了</button>
                 </div>
             </div>
+        </div>
+
+        <!-- 赞赏码大图查看器 -->
+        <div class="donate-qr-viewer" id="donateQrViewer" hidden>
+            <img src="赞赏码.png" alt="赞赏码大图" />
         </div>
     </div>
 

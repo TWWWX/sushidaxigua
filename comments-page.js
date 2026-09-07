@@ -73,6 +73,18 @@
     });
   }
 
+  // 赞赏码点击放大：全屏查看，点击任意处关闭
+  var donateQrImg = document.getElementById('donateQrImg');
+  var donateQrViewer = document.getElementById('donateQrViewer');
+  if (donateQrImg && donateQrViewer) {
+    donateQrImg.addEventListener('click', function () {
+      donateQrViewer.hidden = false;
+    });
+    donateQrViewer.addEventListener('click', function () {
+      donateQrViewer.hidden = true;
+    });
+  }
+
   // 暴露给 index.html 的 hash 路由
   window._suShowCommentsPage = showCommentsPage;
   window._suHideCommentsPage = hideCommentsPage;

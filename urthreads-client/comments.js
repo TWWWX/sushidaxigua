@@ -391,7 +391,7 @@
     sortBar.className = 'comment-sort-bar';
     const sortLabel = document.createElement('span');
     sortLabel.className = 'comment-sort-label';
-    sortLabel.textContent = '排序';
+    sortLabel.textContent = '排序丨';
     const likesSortBtn = document.createElement('button');
     likesSortBtn.type = 'button';
     likesSortBtn.className = 'comment-sort-btn is-active';

@@ -44,6 +44,17 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" type="text/css" href="style-mobile.css" />
+    <link rel="stylesheet" type="text/css" href="comments.css" />
+
+    <!-- 评论/点赞后端配置：siteId 标识当前站点（daxigua = 合成大苏轼） -->
+    <script>
+        (function () {
+            var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+            var workerBase = isLocal ? 'http://127.0.0.1:8787' : 'https://comments.sudongpo521.cn';
+            window.LIKES_CONFIG = { endpoint: workerBase + '/likes', siteId: 'daxigua' };
+            window.COMMENTS_CONFIG = { endpoint: workerBase + '/comments', siteId: 'daxigua' };
+        })();
+    </script>
 
     <script>
         (function forceFonts() {
@@ -140,6 +151,12 @@
         <div class="footer-quote">
             「胜固欣然，败亦可喜」<br>
             《观棋》
+        </div>
+
+        <!-- 评论区入口 -->
+        <div class="comments-entry" id="commentsEntry" role="button" tabindex="0">
+            <div class="comments-entry-title">评论区</div>
+            <div class="comments-entry-sub">留下你与苏轼的故事</div>
         </div>
     </div>
 
@@ -318,6 +335,68 @@
 
     </div>
 
+    <!-- ========== 评论区页 ========== -->
+    <div id="commentsPage">
+        <div class="comments-page-inner">
+            <div class="comments-page-header">
+                <button type="button" class="comments-back-btn" id="commentsBackBtn">← 返回首页</button>
+                <div class="comments-page-title-wrap">
+                    <div class="comments-title-deco-bar"></div>
+                    <h2 class="comments-page-title">合成大苏轼 · 评论区</h2>
+                </div>
+                <span style="width:86px;" aria-hidden="true"></span>
+            </div>
+
+            <div class="comments-page-like-bar">
+                <button class="page-like-btn" data-like-button data-path="/home">
+                    <span class="like-label">为合成大苏轼点赞</span>
+                    <span class="like-count">(<span data-like-count>0</span>)</span>
+                </button>
+            </div>
+
+            <div
+              class="rank-comments"
+              data-worker-comments
+              data-page-id="/home"
+              data-page-url="https://bigstop.sudongpo521.cn/"
+              data-page-title="合成大苏轼"
+            >
+                <div class="comments-section-header">
+                    <h3 class="comments-section-title">留言评论</h3>
+                </div>
+                <div class="comment-list-wrap" data-comment-list></div>
+                <div class="comment-status" data-comment-status></div>
+                <form class="comment-draft-form" data-comment-draft-form>
+                    <textarea name="content" class="comment-textarea" placeholder="写下你的评论…" required maxlength="500"></textarea>
+                    <div class="comment-identity-bar" data-comment-identity-bar hidden>
+                        <span class="comment-identity-name" data-comment-identity-name></span>
+                        <button type="button" class="comment-identity-edit" data-comment-identity-edit>修改</button>
+                    </div>
+                    <button type="submit" class="comment-send-btn" data-comment-send>发表评论</button>
+                </form>
+                <div class="comment-modal" data-comment-modal hidden>
+                    <div class="comment-modal-box">
+                        <h4 class="comment-modal-title">填写身份信息</h4>
+                        <form data-comment-identity-form class="comment-identity-form">
+                            <input name="nickname" type="text" class="comment-input" placeholder="昵称（必填）" required maxlength="30" />
+                            <input name="email" type="email" class="comment-input" placeholder="邮箱（选填，仅供后台人员联系使用）" />
+                            <input name="website" type="url" class="comment-input" placeholder="网站（选填）" />
+                            <div class="comment-modal-actions">
+                                <button type="button" class="comment-cancel-btn" data-comment-cancel>取消</button>
+                                <button type="submit" class="comment-submit-btn">提交评论</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 评论区组件：点赞 + 评论（复用 urthreads） -->
+    <script src="urthreads-client/likes.js"></script>
+    <script src="urthreads-client/comments.js"></script>
+    <script src="comments-page.js"></script>
+
     <!-- 首页入口逻辑：启动游戏加载与引擎 -->
     <script type="text/javascript">
         window._suStartGame = function (version) {
@@ -398,10 +477,21 @@
                     var game = document.getElementById('gamePage');
                     if (home) { home.style.display = 'block'; }
                     if (game) { game.style.display = 'none'; }
+                    if (window._suHideCommentsPage) { window._suHideCommentsPage(); }
+                    return;
+                }
+                // 评论区路由：#/comments
+                if (hash === 'comments') {
+                    var homeC = document.getElementById('homePage');
+                    var gameC = document.getElementById('gamePage');
+                    if (homeC) { homeC.style.display = 'none'; }
+                    if (gameC) { gameC.style.display = 'none'; }
+                    if (window._suShowCommentsPage) { window._suShowCommentsPage(); }
                     return;
                 }
                 var version = HASH_VERSION_MAP[hash];
                 if (version) {
+                    if (window._suHideCommentsPage) { window._suHideCommentsPage(); }
                     window._suStartGame(version);
                 }
             }

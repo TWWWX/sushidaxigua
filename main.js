@@ -128,6 +128,25 @@ window.boot = function() {
         cc.view.enableRetina(true);
         cc.view.resizeWithBrowserSize(true);
 
+        // 修复：Canvas 2D 渲染下 cc.Graphics 注册的 assembler 是绘制 shim（原型链未继承
+        // Assembler 基类），缺少 updateRenderData。浏览器窗口 resize 会重算设计分辨率并把
+        // 节点树标记 UPDATE_RENDER_DATA，渲染流程调用该方法即抛错，且节点上的该标志位
+        // 永远无法清除，导致之后每帧渲染崩溃、画布被清空后无法重绘（永久黑屏）。
+        // 此处补上 no-op（与 Assembler 基类默认实现语义一致），并对其他同类缺失兜底。
+        if (cc.Graphics && cc.Graphics.__assembler__ && typeof cc.Graphics.__assembler__.prototype.updateRenderData !== 'function') {
+            cc.Graphics.__assembler__.prototype.updateRenderData = function() {};
+        }
+        if (cc.Assembler && typeof cc.Assembler.init === 'function') {
+            var _originAssemblerInit = cc.Assembler.init;
+            cc.Assembler.init = function(comp) {
+                _originAssemblerInit.apply(this, arguments);
+                var asm = comp && comp._assembler;
+                if (asm && typeof asm.updateRenderData !== 'function') {
+                    asm.updateRenderData = function() {};
+                }
+            };
+        }
+
         if (!false && !false) {
 
             if (cc.sys.isBrowser) {

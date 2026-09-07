@@ -310,8 +310,19 @@
     // 已点赞的再次点击 = 取消点赞（toggle）
     const wasLiked = isCommentLiked(comment.id);
 
+    // 乐观更新：点击立即反映到界面，服务器确认在后台进行，失败时回滚
+    const previousCount = Math.max(0, Number(comment.likesCount) || 0);
+    const optimisticCount = wasLiked ? Math.max(0, previousCount - 1) : previousCount + 1;
+    comment.likesCount = optimisticCount;
+    if (wasLiked) {
+      removeCommentLiked(comment.id);
+    } else {
+      setCommentLiked(comment.id);
+    }
     if (button) {
-      button.disabled = true;
+      button.textContent = `赞 (${optimisticCount})`;
+      button.classList.toggle('is-liked', !wasLiked);
+      button.disabled = true; // 请求期间禁用，防止连点导致计数错乱
     }
 
     try {
@@ -333,21 +344,26 @@
         throw new Error(`Failed to like comment: ${response.statusText}`);
       }
 
+      // 以服务器返回的计数为准（并发场景下可能和乐观值有偏差）
       const payload = await response.json();
       if (payload?.likes != null) {
         comment.likesCount = Number(payload.likes);
         if (button) {
           button.textContent = `赞 (${comment.likesCount})`;
-          if (wasLiked) {
-            button.classList.remove('is-liked');
-            removeCommentLiked(comment.id);
-          } else {
-            button.classList.add('is-liked');
-            setCommentLiked(comment.id);
-          }
         }
       }
     } catch (error) {
+      // 请求失败：回滚到点击前的状态
+      comment.likesCount = previousCount;
+      if (wasLiked) {
+        setCommentLiked(comment.id);
+      } else {
+        removeCommentLiked(comment.id);
+      }
+      if (button) {
+        button.textContent = `赞 (${previousCount})`;
+        button.classList.toggle('is-liked', wasLiked);
+      }
       console.error('[Comments] Failed to like comment:', error);
       if (statusElement) {
         statusElement.textContent = '评论点赞失败，请稍后重试。';

@@ -143,7 +143,8 @@
     const commentLiked = isCommentLiked(comment.id);
     likeButton.textContent = `赞 (${comment.likesCount || 0})`;
     likeButton.classList.toggle('is-liked', commentLiked);
-    likeButton.disabled = commentLiked;
+    // 已点赞的按钮保持可点击：再次点击 = 取消点赞（toggle 在 likeComment 内处理）
+    likeButton.disabled = false;
     likeButton.addEventListener('click', () => {
       if (onLike) onLike(comment, likeButton);
     });

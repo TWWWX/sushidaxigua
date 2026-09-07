@@ -54,6 +54,16 @@
     display: none;
 }
 
+/* 评论内容允许选中复制（游戏全局 div 设了 user-select:none，这里对评论区所有元素恢复），
+   移动端长按正文即可弹出系统复制菜单 */
+#commentsPage,
+#commentsPage * {
+    user-select: text;
+    -moz-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+}
+
 /* ========== 评论区页面 ========== */
 #commentsPage {
     /* fixed 全屏 + 内部滚动：body overflow:hidden（Cocos 需要），长内容时评论区自己滚 */

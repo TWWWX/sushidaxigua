@@ -105,6 +105,14 @@
     }
   }
 
+  function removeCommentLiked(commentId) {
+    try {
+      window.localStorage.removeItem(getCommentLikedKey(commentId));
+    } catch (error) {
+      // Likes still work without localStorage
+    }
+  }
+
   /**
    * Create a comment element with reply and like actions
    */
@@ -174,8 +182,9 @@
 
   /**
    * Fetch approved comments from endpoint
+   * sort: 'likes'（默认，按点赞数）| 'time'（按时间）
    */
-  async function loadComments(endpoint, pageId, listElement, statusElement, onReply, onLike) {
+  async function loadComments(endpoint, pageId, listElement, statusElement, onReply, onLike, sort = 'likes') {
     listElement.replaceChildren();
     const loading = document.createElement('p');
     loading.className = 'comment-empty comment-loading';
@@ -186,6 +195,7 @@
       const url = new URL(endpoint);
       url.searchParams.set('path', pageId);
       url.searchParams.set('siteId', config.siteId);
+      url.searchParams.set('sort', sort);
 
       const response = await fetch(url, {
         headers: {
@@ -295,7 +305,9 @@
 
   async function likeComment(comment, button, statusElement) {
     if (!comment || !comment.id) return;
-    if (isCommentLiked(comment.id)) return;
+
+    // 已点赞的再次点击 = 取消点赞（toggle）
+    const wasLiked = isCommentLiked(comment.id);
 
     if (button) {
       button.disabled = true;
@@ -311,7 +323,9 @@
         method: 'POST',
         headers: {
           'Accept': 'application/json',
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ cancel: wasLiked }),
       });
 
       if (!response.ok) {
@@ -323,8 +337,13 @@
         comment.likesCount = Number(payload.likes);
         if (button) {
           button.textContent = `赞 (${comment.likesCount})`;
-          button.classList.add('is-liked');
-          setCommentLiked(comment.id);
+          if (wasLiked) {
+            button.classList.remove('is-liked');
+            removeCommentLiked(comment.id);
+          } else {
+            button.classList.add('is-liked');
+            setCommentLiked(comment.id);
+          }
         }
       }
     } catch (error) {
@@ -333,6 +352,7 @@
         statusElement.textContent = '评论点赞失败，请稍后重试。';
         statusElement.classList.add('is-error');
       }
+    } finally {
       if (button) {
         button.disabled = false;
       }
@@ -363,6 +383,39 @@
     const pageTitle = section.dataset.pageTitle;
     let pendingContent = '';
     let replyTargetId = null;
+    let currentSort = 'likes'; // 默认按点赞排序，可切换按时间
+
+    // 排序切换条（插入在评论列表上方）
+    const sortBar = document.createElement('div');
+    sortBar.className = 'comment-sort-bar';
+    const sortLabel = document.createElement('span');
+    sortLabel.className = 'comment-sort-label';
+    sortLabel.textContent = '排序';
+    const likesSortBtn = document.createElement('button');
+    likesSortBtn.type = 'button';
+    likesSortBtn.className = 'comment-sort-btn is-active';
+    likesSortBtn.textContent = '按点赞';
+    const timeSortBtn = document.createElement('button');
+    timeSortBtn.type = 'button';
+    timeSortBtn.className = 'comment-sort-btn';
+    timeSortBtn.textContent = '按时间';
+    sortBar.append(sortLabel, likesSortBtn, timeSortBtn);
+
+    function applySort(sort) {
+      currentSort = sort;
+      likesSortBtn.classList.toggle('is-active', sort === 'likes');
+      timeSortBtn.classList.toggle('is-active', sort === 'time');
+      loadComments(config.endpoint, pageId, list, status, setReplyTarget, handleLike, currentSort);
+    }
+    likesSortBtn.addEventListener('click', () => {
+      if (currentSort !== 'likes') applySort('likes');
+    });
+    timeSortBtn.addEventListener('click', () => {
+      if (currentSort !== 'time') applySort('time');
+    });
+    if (list?.parentElement) {
+      list.parentElement.insertBefore(sortBar, list);
+    }
 
     const setReplyTarget = (comment) => {
       replyTargetId = comment.id;
@@ -478,7 +531,7 @@
         identityForm.reset();
         clearReplyTarget();
         closeModal();
-        await loadComments(config.endpoint, pageId, list, status, setReplyTarget, handleLike);
+        await loadComments(config.endpoint, pageId, list, status, setReplyTarget, handleLike, currentSort);
       }
     };
 
@@ -532,7 +585,7 @@
     });
 
     // Initial setup
-    loadComments(config.endpoint, pageId, list, status, setReplyTarget, handleLike);
+    loadComments(config.endpoint, pageId, list, status, setReplyTarget, handleLike, currentSort);
     resizeCommentField(contentField);
     updateSendButton();
     renderIdentityBar();

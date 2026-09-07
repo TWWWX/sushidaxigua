@@ -187,12 +187,50 @@
 
 /* ========== 评论列表（由 comments.js 动态生成，样式同 sushiNxuan64） ========== */
 .comment-list-wrap { margin-bottom: 14px; }
+/* 排序切换条 */
+.comment-sort-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.comment-sort-label {
+  font-size: 12px;
+  color: #7a877a;
+}
+.comment-sort-btn {
+  border: none;
+  background: transparent;
+  color: #4a7a52;
+  font-family: inherit;
+  font-size: 12px;
+  padding: 2px 0;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.comment-sort-btn:hover {
+  color: #2c3e2c;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.comment-sort-btn.is-active {
+  color: #2c3e2c;
+  font-weight: 700;
+}
 .comment-item {
   padding: 10px 0;
   border-bottom: 1px solid #e8ede8;
 }
 .comment-item:last-child { border-bottom: none; }
 .comment-reply { margin-left: 1.5rem; }
+/* 对齐 n选64 观感：n选64 有全局 * { margin:0; padding:0 } reset，
+   本站没有，需显式清掉 p 元素默认 margin，否则昵称/正文间距偏大 */
+.comment-item p,
+.comment-empty,
+.comment-status,
+.comment-identity-bar {
+  margin: 0;
+}
 .comment-meta {
   font-size: 12px;
   color: #7a877a;

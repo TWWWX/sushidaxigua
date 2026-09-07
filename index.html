@@ -51,7 +51,7 @@
         (function () {
             var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
             var workerBase = isLocal ? 'http://127.0.0.1:8787' : 'https://comments.sudongpo521.cn';
-            window.LIKES_CONFIG = { endpoint: workerBase + '/likes', siteId: 'daxigua' };
+            window.LIKES_CONFIG = { endpoint: workerBase + '/likes', siteId: 'n64' };
             window.COMMENTS_CONFIG = { endpoint: workerBase + '/comments', siteId: 'daxigua' };
         })();
     </script>
@@ -346,7 +346,7 @@
             </div>
 
             <div class="comments-page-like-bar">
-                <button class="page-like-btn" data-like-button data-path="/home">
+                <button class="page-like-btn" data-like-button data-path="/ranking">
                     <span class="like-label">为苏轼点赞</span>
                     <span class="like-count">(<span data-like-count>0</span>)</span>
                 </button>

@@ -13,7 +13,7 @@
     if (game) game.style.display = 'none';
     if (!page) return;
     page.style.display = 'block';
-    window.scrollTo(0, 0);
+    page.scrollTop = 0; // 评论页是内部滚动容器
 
     // 首次显示时初始化点赞与评论组件
     if (!commentsPageInited) {
@@ -44,12 +44,11 @@
     });
   }
 
-  // 返回首页：清空 hash（触发 hashchange -> routeByHash 显示首页）
+  // 返回首页：清空 hash（触发 hashchange -> routeByHash 显示首页，保留首页滚动位置）
   var back = document.getElementById('commentsBackBtn');
   if (back) {
     back.addEventListener('click', function () {
       window.location.hash = '';
-      window.scrollTo(0, 0);
     });
   }
 

@@ -133,7 +133,11 @@ p.footer {
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
+    /* 首页自身滚动：body overflow:hidden（Cocos 需要），小屏内容超出时在首页容器内上下滑动 */
+    overflow-y: auto;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
     background: #f5f3ef;
     z-index: 10000;
     box-sizing: border-box;

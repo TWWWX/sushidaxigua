@@ -184,8 +184,9 @@
   /**
    * Fetch approved comments from endpoint
    * sort: 'likes'（默认，按点赞数）| 'time'（按时间）
+   * order: 'asc'（顺序，默认）| 'desc'（逆序）
    */
-  async function loadComments(endpoint, pageId, listElement, statusElement, onReply, onLike, sort = 'likes') {
+  async function loadComments(endpoint, pageId, listElement, statusElement, onReply, onLike, sort = 'likes', order = 'asc') {
     listElement.replaceChildren();
     const loading = document.createElement('p');
     loading.className = 'comment-empty comment-loading';
@@ -197,6 +198,7 @@
       url.searchParams.set('path', pageId);
       url.searchParams.set('siteId', config.siteId);
       url.searchParams.set('sort', sort);
+      url.searchParams.set('order', order);
 
       const response = await fetch(url, {
         headers: {
@@ -400,14 +402,16 @@
     const pageTitle = section.dataset.pageTitle;
     let pendingContent = '';
     let replyTargetId = null;
-    let currentSort = 'likes'; // 默认按点赞排序，可切换按时间
+    let currentSort = 'likes'; // 字段：按点赞 | 按时间
+    let currentOrder = 'asc'; // 方向：asc=顺序（早到晚/点赞多到少）| desc=逆序（晚到早/点赞少到多）
 
     // 排序切换条（插入在评论列表上方）
     const sortBar = document.createElement('div');
     sortBar.className = 'comment-sort-bar';
-    const sortLabel = document.createElement('span');
-    sortLabel.className = 'comment-sort-label';
-    sortLabel.textContent = '排序丨';
+    const orderBtn = document.createElement('button');
+    orderBtn.type = 'button';
+    orderBtn.className = 'comment-sort-btn comment-order-btn';
+    orderBtn.textContent = '顺序';
     const likesSortBtn = document.createElement('button');
     likesSortBtn.type = 'button';
     likesSortBtn.className = 'comment-sort-btn is-active';
@@ -416,14 +420,23 @@
     timeSortBtn.type = 'button';
     timeSortBtn.className = 'comment-sort-btn';
     timeSortBtn.textContent = '按时间';
-    sortBar.append(sortLabel, likesSortBtn, timeSortBtn);
+    sortBar.append(orderBtn, likesSortBtn, timeSortBtn);
 
+    function reload() {
+      loadComments(config.endpoint, pageId, list, status, setReplyTarget, handleLike, currentSort, currentOrder);
+    }
     function applySort(sort) {
       currentSort = sort;
       likesSortBtn.classList.toggle('is-active', sort === 'likes');
       timeSortBtn.classList.toggle('is-active', sort === 'time');
-      loadComments(config.endpoint, pageId, list, status, setReplyTarget, handleLike, currentSort);
+      reload();
     }
+    orderBtn.addEventListener('click', () => {
+      currentOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+      orderBtn.textContent = currentOrder === 'asc' ? '顺序' : '逆序';
+      orderBtn.classList.toggle('is-active', currentOrder === 'desc');
+      reload();
+    });
     likesSortBtn.addEventListener('click', () => {
       if (currentSort !== 'likes') applySort('likes');
     });
@@ -548,7 +561,7 @@
         identityForm.reset();
         clearReplyTarget();
         closeModal();
-        await loadComments(config.endpoint, pageId, list, status, setReplyTarget, handleLike, currentSort);
+        await loadComments(config.endpoint, pageId, list, status, setReplyTarget, handleLike, currentSort, currentOrder);
       }
     };
 
@@ -602,7 +615,7 @@
     });
 
     // Initial setup
-    loadComments(config.endpoint, pageId, list, status, setReplyTarget, handleLike, currentSort);
+    loadComments(config.endpoint, pageId, list, status, setReplyTarget, handleLike, currentSort, currentOrder);
     resizeCommentField(contentField);
     updateSendButton();
     renderIdentityBar();

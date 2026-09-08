@@ -44,11 +44,12 @@
     });
   }
 
-  // 返回首页：清空 hash（触发 hashchange -> routeByHash 显示首页，保留首页滚动位置）
+  // 返回首页：直接移除 URL 中的 hash，地址栏不残留 #/（pushState 不触发 hashchange，手动调用路由）
   var back = document.getElementById('commentsBackBtn');
   if (back) {
     back.addEventListener('click', function () {
-      window.location.hash = '';
+      history.pushState(null, '', window.location.pathname + window.location.search);
+      if (window._suRouteByHash) { window._suRouteByHash(); }
     });
   }
 

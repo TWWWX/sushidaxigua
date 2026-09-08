@@ -551,7 +551,12 @@
             });
 
             window.addEventListener('hashchange', routeByHash);
+            window._suRouteByHash = routeByHash;
             routeByHash();
+            // URL 停留在 #/ 或 #（首页）时清除 hash，地址栏保持干净
+            if (/^#\/?$/.test(window.location.hash)) {
+                history.replaceState(null, '', window.location.pathname + window.location.search);
+            }
         })();
 
         // 测试快捷键：进入游戏后按 F2 直接弹出合成结束结果页

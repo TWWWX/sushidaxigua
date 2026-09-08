@@ -208,19 +208,8 @@
   font-size: 12px;
   color: #7a877a;
 }
-.comment-order-btn {
-  background: #eef3ee;
-  border-radius: 999px;
-  padding: 2px 10px;
-  color: #4a7a52;
-}
-.comment-order-btn:hover {
-  background: #e2ece2;
-  text-decoration: none;
-}
-.comment-order-btn.is-active {
-  background: #4a7a52;
-  color: #fff;
+.comment-sort-divider {
+  color: #c6d2c6;
 }
 .comment-sort-btn {
   border: none;

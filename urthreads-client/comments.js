@@ -410,8 +410,11 @@
     sortBar.className = 'comment-sort-bar';
     const orderBtn = document.createElement('button');
     orderBtn.type = 'button';
-    orderBtn.className = 'comment-sort-btn comment-order-btn';
+    orderBtn.className = 'comment-sort-btn';
     orderBtn.textContent = '顺序';
+    const sortDivider = document.createElement('span');
+    sortDivider.className = 'comment-sort-divider';
+    sortDivider.textContent = '丨';
     const likesSortBtn = document.createElement('button');
     likesSortBtn.type = 'button';
     likesSortBtn.className = 'comment-sort-btn is-active';
@@ -420,7 +423,7 @@
     timeSortBtn.type = 'button';
     timeSortBtn.className = 'comment-sort-btn';
     timeSortBtn.textContent = '按时间';
-    sortBar.append(orderBtn, likesSortBtn, timeSortBtn);
+    sortBar.append(orderBtn, sortDivider, likesSortBtn, timeSortBtn);
 
     function reload() {
       loadComments(config.endpoint, pageId, list, status, setReplyTarget, handleLike, currentSort, currentOrder);
@@ -434,7 +437,6 @@
     orderBtn.addEventListener('click', () => {
       currentOrder = currentOrder === 'asc' ? 'desc' : 'asc';
       orderBtn.textContent = currentOrder === 'asc' ? '顺序' : '逆序';
-      orderBtn.classList.toggle('is-active', currentOrder === 'desc');
       reload();
     });
     likesSortBtn.addEventListener('click', () => {
